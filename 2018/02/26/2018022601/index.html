@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16-next.png?v=6.0.2">
+
+
+  <link rel="mask-icon" href="/images/favicon/safari-pinned-tag-next.svg?v=6.0.2" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="数值," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="概要说在前面顾名思义，伤害公式上就是攻击方和受攻击方相关战斗参数计算伤害的公式。由于国内不少游戏十分注重所谓“节奏”的设计，所以伤害公式几乎贯穿了整个游戏成长线，小到战力计算，大到装备和技能设计对战斗节奏的影响，这些都离不开伤害公式。设计合理伤害公式的重要性也因此凸显。 伤害公式分类上通常分为加法和乘法两类（也有称减法和除法的，其实都是一类，就是加负数和负指数的区别）。 缩写方便讨论起见，先给出后">
+<meta name="keywords" content="数值">
+<meta property="og:type" content="article">
+<meta property="og:title" content="小谈伤害公式">
+<meta property="og:url" content="https://fancydz.github.io/2018/02/26/2018022601/index.html">
+<meta property="og:site_name" content="稀奇古怪研究室">
+<meta property="og:description" content="概要说在前面顾名思义，伤害公式上就是攻击方和受攻击方相关战斗参数计算伤害的公式。由于国内不少游戏十分注重所谓“节奏”的设计，所以伤害公式几乎贯穿了整个游戏成长线，小到战力计算，大到装备和技能设计对战斗节奏的影响，这些都离不开伤害公式。设计合理伤害公式的重要性也因此凸显。 伤害公式分类上通常分为加法和乘法两类（也有称减法和除法的，其实都是一类，就是加负数和负指数的区别）。 缩写方便讨论起见，先给出后">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-03-02T07:10:15.024Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="小谈伤害公式">
+<meta name="twitter:description" content="概要说在前面顾名思义，伤害公式上就是攻击方和受攻击方相关战斗参数计算伤害的公式。由于国内不少游戏十分注重所谓“节奏”的设计，所以伤害公式几乎贯穿了整个游戏成长线，小到战力计算，大到装备和技能设计对战斗节奏的影响，这些都离不开伤害公式。设计合理伤害公式的重要性也因此凸显。 伤害公式分类上通常分为加法和乘法两类（也有称减法和除法的，其实都是一类，就是加负数和负指数的区别）。 缩写方便讨论起见，先给出后">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.2',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: 'H5SX4OP1QL',
+      apiKey: '70f7192250f464bfe95d7a914ddbeec6',
+      indexName: 'prod_blog1',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://fancydz.github.io/2018/02/26/2018022601/"/>
+
+
+
+
+
+  <title>小谈伤害公式 | 稀奇古怪研究室</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">稀奇古怪研究室</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">分享游戏设计心得</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fancydz.github.io/2018/02/26/2018022601/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fancydz">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myavatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="稀奇古怪研究室">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">小谈伤害公式</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-26T15:57:43+08:00">
+                2018-02-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h1><h2 id="说在前面"><a href="#说在前面" class="headerlink" title="说在前面"></a>说在前面</h2><p>顾名思义，伤害公式上就是攻击方和受攻击方相关战斗参数计算伤害的公式。由于国内不少游戏十分注重所谓“节奏”的设计，所以伤害公式几乎贯穿了整个游戏成长线，小到战力计算，大到装备和技能设计对战斗节奏的影响，这些都离不开伤害公式。设计合理伤害公式的重要性也因此凸显。</p>
+<p>伤害公式分类上通常分为加法和乘法两类（也有称减法和除法的，其实都是一类，就是加负数和负指数的区别）。</p>
+<h2 id="缩写"><a href="#缩写" class="headerlink" title="缩写"></a>缩写</h2><p>方便讨论起见，先给出后文会用到的通用缩写：</p>
+<p>MAXHP-最大生命值</p>
+<p>ATK-攻击 DEF-防御</p>
+<p>PEN-穿透 EVA-闪避</p>
+<p>RES-抵抗 CRI-会心</p>
+<p>DPS-每秒输出伤害</p>
+<p>DRR-免伤率</p>
+<p>DMG-总伤害</p>
+<p>EHP-有效生命值</p>
+<h2 id="战斗力"><a href="#战斗力" class="headerlink" title="战斗力"></a>战斗力</h2><p>为方便后续讨论，对战斗力做预定义如下：</p>
+<p>本文中的战斗力基于战斗模拟，均以结束战斗的时间来评定，即作为攻击方，彻底击败防御方（即防御方HP降为0）的情形：</p>
+<p>设对战双方A,B，采用最简单的互相对A的模式：</p>
+<p>A战胜B的时间T1=EHPB/DPSA</p>
+<p>B战胜A的时间T2=EHPA/DPSB</p>
+<p>若T1&gt;T2,即EHPB/DPSA&gt;EHPA/DPSB时，B胜出</p>
+<p>进一步整理得到EHPB×DPSB&gt;EHPA×DPSA时，B胜出</p>
+<p>类似的有</p>
+<p>EHPA×DPSA&gt;EHPB×DPSB时，A胜出</p>
+<p>EHPB×DPSB=EHPA×DPSA时，A，B打平</p>
+<p>故使用EHP*DPS作为角色的战斗力评价标准。</p>
+<h1 id="加法公式"><a href="#加法公式" class="headerlink" title="加法公式"></a>加法公式</h1><h2 id="基本形式"><a href="#基本形式" class="headerlink" title="基本形式"></a>基本形式</h2><p>DMG=ATK-DEF</p>
+<h2 id="适用场合"><a href="#适用场合" class="headerlink" title="适用场合"></a>适用场合</h2><p>ATK，DEF成长空间有限，且按比例投放</p>
+<p>简单粗暴、体验强烈、便于属性售卖</p>
+<p>“一人撂倒一群”</p>
+<p>快餐类游戏，鼓励pvp，可以保证用钱砸数值一定有效</p>
+<p>对数值投放的要求更加严格，对于道具付费类游戏既要保证消费又要保证游戏数值总体平衡。</p>
+<p>需要设计关卡卡点，容易设计出属性不达标就几乎无法通关的关卡配置</p>
+<p>易控制</p>
+<h2 id="战斗力-1"><a href="#战斗力-1" class="headerlink" title="战斗力"></a>战斗力</h2><p>不考虑防御情形下击败需要的攻击次数N1=MAXHP/ATK</p>
+<p>考虑防御情形下击败需要的攻击次数N2=MAXHP/(ATK-DEF)</p>
+<p>EHP=MAXHP+ATK×(N2-N1)=MAXHP/(1-DEF/ATK)</p>
+<p>即加法公式下的EHP只与MAXHP与比值【DEF/ATK】有关。【DEF/ATK】越大，即防御方防御与攻击方防御的比值越大，防御方的有效生命值越高。</p>
+<p>A战斗力=EHPA*DPSA=DPSA × MAXHP/(1-DEFA/ATKB)</p>
+<p>加法公式下，攻击方战斗力的计算依赖对方ATK计算自身的EHP，即<strong>加法公式下的战斗力计算依赖于交战双方</strong>。一种常见的解决方式是计算战斗力时，设立一个数值靶子（即木桩），借此靶子完成玩家攻击侧的战斗力计算。</p>
+<p>另一个值得注意的点是由于加法公式下战斗力依赖于参照物，部分数学规则不再适用。以等式、不等式传递性为例，加法公式下的战斗力可能出现A=B,B=C,C!=A的<strong>等式无法传递</strong>的情形。</p>
+<p>这一点有好有坏，好处是通过精心设计有机会实现属性自由组合后的循环克制，为游戏带来更多乐趣；坏处是会给数值设计和维护带来一些困难。</p>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><p><strong>不破防问题</strong></p>
+<p>既然说到加法方式，就不得不提一下不破防的问题。不破防即防御方的防御大于攻击方的攻击。诚然，直接使用前文提到的形如DMG=ATK-DEF的基本形式，势必会有各种各样的问题，但事实上大多游戏中使用的类加法公式都在基础形式上进行了大量的改进，解决该问题的方式试罗列如下：</p>
+<ul>
+<li>引入最低伤害，例如不破防时定义一个常数最小伤害</li>
+<li>分段函数，例如根据ATK与DEF的不同取值范围采用不同类型的伤害公式</li>
+</ul>
+<p><strong>伤害超量问题</strong></p>
+<p>ATK远大于DEF时，有效DMG过大，可能出现一击秒杀的情形，不是所有游戏的玩家都能接受此类情况。可以通过构造一个反映ATK与DEF差值大小的函数作为修正因子，随着ATK与DEF差值的增大，该因子会限制整体有效输出的增长，大致形式参考：</p>
+<p>DMG=(ATK-DEF)*F(ATK,DEF)</p>
+<p><strong>攻速暴击问题</strong></p>
+<p>加法公式下，低攻击高攻速的角色设计难度大，若直接采用基本形式，会出现攻速越快，被防御减免掉的攻击越多的情况，导致玩家会追求高攻低速的武器，抢先出手一击重伤或秒杀。类似的，暴击也会有同样的问题。相比乘法公式，由于其自身等比等价的特性，例如低攻击高攻速的职业，乘除法就比加减法容易做得多。</p>
+<h1 id="乘法公式"><a href="#乘法公式" class="headerlink" title="乘法公式"></a>乘法公式</h1><h2 id="基本形式-1"><a href="#基本形式-1" class="headerlink" title="基本形式"></a>基本形式</h2><p>DMG=ATK*(1-DRR)</p>
+<p>其中DRR为免伤率（%），通常不直接进行投放，是通过若干基础属性计算得到的复合属性。</p>
+<p>一种比较经典的形式是：</p>
+<p>DRR=DEF/（K1×DEF+K2×LV^(K3)+K4）</p>
+<p>常见的例子包括：</p>
+<p>英雄联盟中K1=1, K2=100，K3=0，K4=0（或者理解成m=0，C=100）</p>
+<p>魔兽世界中K1=1, K2=85，K3=1，K4=400</p>
+<h2 id="适用场合-1"><a href="#适用场合-1" class="headerlink" title="适用场合"></a>适用场合</h2><p>属性成长较快，需要平衡数据以防止玩家后期属性均衡增长而引发战斗力爆炸的场合</p>
+<p>希望凸显职业差异，提升配装自由性，体现多路径培养特色特色，在平衡性调整上拓展性更高，调整难度更低。</p>
+<p>等级碾压时不会出现战斗局势绝对碾压，本公式下依旧有一定操作的的空间。</p>
+<h2 id="战斗力-2"><a href="#战斗力-2" class="headerlink" title="战斗力"></a>战斗力</h2><p>不考虑免伤率情形下击败需要的攻击次数N1=MAXHP/ATK</p>
+<p>考虑免伤率情形下击败需要的攻击次数N2=MAXHP/[ATK*(1-DRR)]</p>
+<p>EHP=MAXHP+ATK×(N2-N1)=MAXHP/(1-DRR)</p>
+<p>即乘法公式下的EHP只与自身的MAXHP与免伤率DRR有关。如果DPS仅与自身有关，则不需参照物。</p>
+<h2 id="常见问题-1"><a href="#常见问题-1" class="headerlink" title="常见问题"></a>常见问题</h2><p><strong>瓶颈问题</strong></p>
+<p>加法公式中，随着属性持续投放，游戏生命周期后期容易出现属性爆炸和溢出的情形，乘法公式为了解决这个问题，引入了两个措施：</p>
+<ul>
+<li>等级稀释</li>
+</ul>
+<p>见基本形式中减伤率DRR的定义，随着人物角色等级的提升，提升1%免伤率需要的DEF会不断增长</p>
+<ul>
+<li>数学极限</li>
+</ul>
+<p>见基本形式中减伤率DRR的定义，由于人物角色等级存在上限，当玩家达到满级时，DEF→∞时显然DRR→1/K1。当然更安全的做法是直接定义一个最大有效值，即使理论值超出该最大有效值生效的仍为最大有效值</p>
+<p>解决加法公式数值爆炸问题的同时，也带来了新的问题，即游戏后期属性“贬值”，这会带来一些问题：</p>
+<ul>
+<li><p>属性售卖的游戏中用户不买账</p>
+</li>
+<li><p>用户自愿卡级：部分数值设计不合理的游戏中，假设其60级为一个公式变体分段，则可能出现59级玩家游戏体验显著高于60-70级玩家的情形，导致玩家升级热情下降</p>
+</li>
+</ul>
+<p><strong>维护难度高</strong></p>
+<p>加法公式下，新增一个投放100点攻击的系统，只需另外投放100点防御即可；</p>
+<p>乘法公式下，新增一个投放100点攻击的系统，可能会引起整个数值系统的变动；</p>
+<h1 id="如何选择合适的伤害公式"><a href="#如何选择合适的伤害公式" class="headerlink" title="如何选择合适的伤害公式"></a>如何选择合适的伤害公式</h1><p>首先需要确定游戏类型和需求，游戏模式，收费点，成长线，战斗模式等等。抛开战斗方式、战斗体验谈选择什么样的伤害公式就是耍流氓。</p>
+<p>除此之外，还要考虑游戏自身的属性设计。例如守望先锋作为竞技类游戏为什么没有选择竞技类游戏常见的乘法公式而是</p>
+<p>公式本身不能决定以下特征，而是靠公式的各类修正因子决定。</p>
+<p>通常来讲：</p>
+<p>游戏节奏：乘法节奏慢，加法节奏快</p>
+<p>属性提升体感：加法体感明显，乘法体感平缓</p>
+<p>成长线：加法成长线短，直接；乘法成长线长，有多种选择</p>
+<p>战斗模式：加法简单；乘法复杂</p>
+<p>拓展性：加法拓展性强；乘法拓展性复杂</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数值/" rel="tag"># 数值</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/22/2018022201/" rel="next" title="永远的七日之都体验小记">
+                <i class="fa fa-chevron-left"></i> 永远的七日之都体验小记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/02/2018030201/" rel="prev" title="谈谈棋牌游戏比赛设计">
+                谈谈棋牌游戏比赛设计 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myavatar.jpg"
+                alt="Fancydz" />
+            
+              <p class="site-author-name" itemprop="name">Fancydz</p>
+              <p class="site-description motion-element" itemprop="description">Game for Fun, Not for Food</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:fzaq@qq.com" target="_blank" title="Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://steamcommunity.com/id/fancydz/" target="_blank" title="Steam">
+                      
+                        <i class="fa fa-fw fa-steam"></i>Steam</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概要"><span class="nav-number">1.</span> <span class="nav-text">概要</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#说在前面"><span class="nav-number">1.1.</span> <span class="nav-text">说在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缩写"><span class="nav-number">1.2.</span> <span class="nav-text">缩写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#战斗力"><span class="nav-number">1.3.</span> <span class="nav-text">战斗力</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#加法公式"><span class="nav-number">2.</span> <span class="nav-text">加法公式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本形式"><span class="nav-number">2.1.</span> <span class="nav-text">基本形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#适用场合"><span class="nav-number">2.2.</span> <span class="nav-text">适用场合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#战斗力-1"><span class="nav-number">2.3.</span> <span class="nav-text">战斗力</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见问题"><span class="nav-number">2.4.</span> <span class="nav-text">常见问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#乘法公式"><span class="nav-number">3.</span> <span class="nav-text">乘法公式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本形式-1"><span class="nav-number">3.1.</span> <span class="nav-text">基本形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#适用场合-1"><span class="nav-number">3.2.</span> <span class="nav-text">适用场合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#战斗力-2"><span class="nav-number">3.3.</span> <span class="nav-text">战斗力</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见问题-1"><span class="nav-number">3.4.</span> <span class="nav-text">常见问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何选择合适的伤害公式"><span class="nav-number">4.</span> <span class="nav-text">如何选择合适的伤害公式</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fancydz</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v6.0.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.0.2"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

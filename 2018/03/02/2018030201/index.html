@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16-next.png?v=6.0.2">
+
+
+  <link rel="mask-icon" href="/images/favicon/safari-pinned-tag-next.svg?v=6.0.2" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="棋牌 比赛," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="写在前面自博客开启也写了有几篇文章了，但之前都是在写基于自己兴趣爱好在业余时间研究的内容，跟自己的手头从事的工作没有多大关系。虽然都说人在自己感兴趣的领域会走的更远，但之前做过的东西多少还是总结下好，虽然回顾起来不很愉快，但多少算是给过去的时间一点交代。 毕竟自己在这个行业里也扑腾了一段时间，进入正题前还是多少想分享下个人对棋牌游戏和这个行业的拙见。 棋牌游戏自古以来都是娱乐生活的刚需之一，随着玩">
+<meta name="keywords" content="棋牌 比赛">
+<meta property="og:type" content="article">
+<meta property="og:title" content="谈谈棋牌游戏比赛设计">
+<meta property="og:url" content="https://fancydz.github.io/2018/03/02/2018030201/index.html">
+<meta property="og:site_name" content="稀奇古怪研究室">
+<meta property="og:description" content="写在前面自博客开启也写了有几篇文章了，但之前都是在写基于自己兴趣爱好在业余时间研究的内容，跟自己的手头从事的工作没有多大关系。虽然都说人在自己感兴趣的领域会走的更远，但之前做过的东西多少还是总结下好，虽然回顾起来不很愉快，但多少算是给过去的时间一点交代。 毕竟自己在这个行业里也扑腾了一段时间，进入正题前还是多少想分享下个人对棋牌游戏和这个行业的拙见。 棋牌游戏自古以来都是娱乐生活的刚需之一，随着玩">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://i.imgur.com/lTD3FeX.png">
+<meta property="og:updated_time" content="2018-03-06T06:48:43.650Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="谈谈棋牌游戏比赛设计">
+<meta name="twitter:description" content="写在前面自博客开启也写了有几篇文章了，但之前都是在写基于自己兴趣爱好在业余时间研究的内容，跟自己的手头从事的工作没有多大关系。虽然都说人在自己感兴趣的领域会走的更远，但之前做过的东西多少还是总结下好，虽然回顾起来不很愉快，但多少算是给过去的时间一点交代。 毕竟自己在这个行业里也扑腾了一段时间，进入正题前还是多少想分享下个人对棋牌游戏和这个行业的拙见。 棋牌游戏自古以来都是娱乐生活的刚需之一，随着玩">
+<meta name="twitter:image" content="https://i.imgur.com/lTD3FeX.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.2',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: 'H5SX4OP1QL',
+      apiKey: '70f7192250f464bfe95d7a914ddbeec6',
+      indexName: 'prod_blog1',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://fancydz.github.io/2018/03/02/2018030201/"/>
+
+
+
+
+
+  <title>谈谈棋牌游戏比赛设计 | 稀奇古怪研究室</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">稀奇古怪研究室</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">分享游戏设计心得</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fancydz.github.io/2018/03/02/2018030201/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fancydz">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myavatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="稀奇古怪研究室">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">谈谈棋牌游戏比赛设计</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-02T16:03:14+08:00">
+                2018-03-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>自博客开启也写了有几篇文章了，但之前都是在写基于自己兴趣爱好在业余时间研究的内容，跟自己的手头从事的工作没有多大关系。虽然都说人在自己感兴趣的领域会走的更远，但之前做过的东西多少还是总结下好，虽然回顾起来不很愉快，但多少算是给过去的时间一点交代。</p>
+<p>毕竟自己在这个行业里也扑腾了一段时间，进入正题前还是多少想分享下个人对棋牌游戏和这个行业的拙见。</p>
+<p>棋牌游戏自古以来都是娱乐生活的刚需之一，随着玩法传播和社会发展，逐渐呈现出高度分散化、个性化的特征。地域、民族、语言都可以成为玩法的划分条件。但相较而言，棋类通常有比较稳定的公认玩法，而扑克和麻将类却拥有众多形态各异的地方性玩法。</p>
+<p>产生这种差异的原因有很多，笔者的一个猜想是，棋类游戏耗时长，上手难度高，分数，无论是单局时长还是面向的用户群特征，都在发展过程中自然而然地被赌博类用户筛选掉。剩下的扑克和麻将类玩法，单局时长短，上手容易，分数翻倍大，自然受到赌博类用户的欢迎。再加上赌博类用户场子打了都喜欢自立规矩，产生各类牌类和麻将玩法也是自然。</p>
+<p>由于赌博类用户贡献的ARPU远高于非赌博用户，所以目前棋牌游戏市场上活跃的基本也只剩下牌类和麻将游戏。尽管已经有相关政策限制一些强赌性游戏的线上运营，但仍有不少逐利的厂商在灰色空间铤而走险。早中期的棋牌游戏都是走金币场售卖游戏币（当然增值服务和付费道具也不可小觑）的模式，直到2016年闲徕互娱的房卡模式一炮走红，之后各地方的房卡游戏就一发不可收拾。</p>
+<p>棋牌游戏的未来在哪里？棋牌行业相对其他行业，特别是自身归属的互联网行业大类，受其自身工具特征的影响，本身就是技术层面发展相当缓慢的一个行业。从联众火爆的1999-2000年到现在，棋牌游戏不过是从PC端走到了移动端，换了一层更好看的皮。技术门槛低，维护成本低，现成的源码第三方低价成套卖。大量资本涌入群魔乱舞。约局游戏拼到最后，拼的不是什么用户体验和系统设计，而是运营推广、服务稳定性以及如何应对各类政策风险。未来的棋牌行业还是资本的游戏，当然玩家还是乐在其中，只是苦了从业者。</p>
+<p>运营推广：更高曝光度和用户量</p>
+<p>服务稳定性：各类复杂情形下游戏服务的稳定性</p>
+<p>政策风险：上线运营资质材料、迎接各类检查、听渠道爸爸和果爹的话</p>
+<p>棋牌游戏重运营，策划在整个团队中扮演的角色其实相当尴尬，金币场游戏还好，毕竟经济体系是命脉，约局类游戏就只能当吃瓜群众了，当然上面总会有各种天马星空飞出天际堪比童话的系统需求和活动需求丢给你，工作内容还是很“充实”的。</p>
+<h1 id="棋牌比赛设计"><a href="#棋牌比赛设计" class="headerlink" title="棋牌比赛设计"></a>棋牌比赛设计</h1><p>本文主要讨论棋牌游戏内的比赛设计，会从比赛目的、比赛分类、赛制分类及比赛设计共四个部分进行讨论。</p>
+<h2 id="比赛目的"><a href="#比赛目的" class="headerlink" title="比赛目的"></a>比赛目的</h2><p>大体来讲，棋牌游戏中的比赛可以提供以下功能：</p>
+<ul>
+<li>经济闭环构成（正或负反馈）</li>
+<li>丰富游戏内容（竞技类内容、福利类内容）</li>
+<li>运营推广支持（资源联动、宣传性噱头）</li>
+</ul>
+<p>如果你的比赛拥有多个目的，请将它们分拆考虑，同时要明确比赛在整个游戏中的角色，即作为“系统”还是“活动”，两者的目的是完全不同的。</p>
+<h2 id="比赛分类"><a href="#比赛分类" class="headerlink" title="比赛分类"></a>比赛分类</h2><p>分类标准很多，这里根据<strong>比赛开赛</strong>条件，将比赛分为以下几类：</p>
+<ul>
+<li>人满即开赛：待赛人数达标即可开始的比赛</li>
+<li>定时赛：定时开放入场、定时结束且持续时间不超过一天的比赛</li>
+<li>常时赛：持续时间长，无淘汰机制的积分排名赛</li>
+</ul>
+<p>根据目的和产品特征选择合适的比赛类型。</p>
+<h2 id="赛制分类"><a href="#赛制分类" class="headerlink" title="赛制分类"></a>赛制分类</h2><p>比赛类型决定了其开始和结束的方式，赛制的类型决定玩家排名和晋级淘汰机制。</p>
+<p>棋牌比赛常见赛制可以分为以下几类：</p>
+<ul>
+<li>积分排名：无淘汰机制，比赛结束后按积分排名</li>
+<li>定局积分：指定局数游戏，每局游戏重新配桌，结束后按积分排名</li>
+<li>MTT：源自德州，常见于筹码类游戏，游戏开始后除非有玩家被清桌否则定桌，清桌条件有固定与可变两种</li>
+<li>STS：按积分相近原则配桌，每桌打一定副数之后，所有玩家的分数会综合在一起排名，按照这个排名决定下一轮的晋级者。每次组桌统一进行，组桌前进行比例或固定人数淘汰</li>
+<li>登高：浮动奖池，连胜晋级，输一盘淘汰，可中途退出结算领奖</li>
+</ul>
+<p>每类赛制都有自己的优劣，大多数设计严谨的比赛会在不同阶段使用不同的赛制，例如：</p>
+<p>预赛阶段选用快速清人的赛制</p>
+<p>复赛阶段选用按水平相近原则配桌的赛制</p>
+<p>决赛阶段选用单轮盘数多的赛制，给比赛留下悬念</p>
+<h2 id="比赛设计"><a href="#比赛设计" class="headerlink" title="比赛设计"></a>比赛设计</h2><p>搭配比赛的棋牌游戏市面上已经不计其数，其中不乏可以借鉴的优秀设计，所以通用部分的设计不再赘述。本文主要谈谈自己思考过的一些有意思的部分。一是匹配机制，二是积分机制，三是对经济系统的影响：</p>
+<p><strong>匹配机制</strong></p>
+<p>比赛开赛后，如何合理、高效的完成用户的匹配和分桌，是影响比赛体验的关键因素之一。</p>
+<p>虽然以下的讨论主要针对比赛设计，但其实不少金币场的匹配机制设计也可以参考该部分。</p>
+<p><em>顺序法</em></p>
+<p>按照玩家的入场顺序，依次插入第一张未满桌子空位，满桌后插入下一桌，依此类推。</p>
+<p>评价：实现最简单的方法，但有可能出现别有用心的用户同时入场达到同桌作弊的目的。</p>
+<p><em>乱序法</em></p>
+<p>按照玩家的入场顺序，乱序或随机插入现有桌子空位。依此类推。</p>
+<p>评价：需要对比赛人数和比赛桌数进行较准确的估计，否则可能出现未满桌的情形</p>
+<p><strong><em>以上两种匹配机制由于其自身缺陷在现在的棋牌游戏中已经很少见，因此也不再做进一步讨论</em></strong></p>
+<p><em>单队列法</em></p>
+<p>等待匹配的玩家进入同一条匹配队列，根据需要从中选取玩家组桌开始游戏</p>
+<ul>
+<li>比赛开始时匹配队列中全部玩家组桌开始游戏</li>
+<li>比赛进行中完成游戏等待下一局游戏开始的玩家再次进入匹配队列</li>
+</ul>
+<p><em>多队列法</em></p>
+<p>着重讲讲这个。</p>
+<p>多队列法理解起来很简单，其实就是在单队列法的基础上增加了按照一定原则将玩家插入“适合”其的队列中。这个原则可以是入场时间、比赛积分、胜率甚至是ID等等。</p>
+<p>假设我们使用比赛积分作为分配原则，那么遇到的一个常见问题就是在比赛的不同阶段，总有一部分队列的匹配速度低于标准值。例如比赛后期，比赛积分与比赛人数基本会呈现如下趋势：</p>
+<p><img src="https://i.imgur.com/lTD3FeX.png" alt=""></p>
+<p>即位于中等分段的用户人数多，低分段和高分段的用户少。</p>
+<p>相应的如果按照比赛积分作为等待队列的分配原则，低分段和高分段用户所处的等待队列匹配速度会低于标准值。比赛匹配速度慢是棋牌游戏比赛的大忌。</p>
+<p>为了解决这个问题，我们需要让各个队列内的用户流动起来，即建立一个基于等待时长的多队列的流动规则。简单的讲，就是当用户在积分对应队列（LV.X）内等待时间T达到T1仍未完成组桌时，允许其参与(LV.X±C1）级别等待队列的匹配，伴随着T的增长，我们可以进一步放宽C1的范围，以达到加快匹配速度的目的。</p>
+<p>队列内人数满足配桌需要后，可以开始匹配，这个选取过程可以是随机的，也可以是经过一定设计的。为了解决同IP相关的作弊问题，可以在匹配前对队列内的人员利用IP进行进一步筛选，若存在2名及以上同IP的玩家，则强制将其分配到不同桌子上。</p>
+<p><strong>积分机制</strong></p>
+<p>棋牌游戏比赛中的积分，在整个比赛流程中扮演了重要的角色，不仅用于评定用户在比赛中的表现，也决定了排名、奖励发放和晋级淘汰。通常而言，积分有三类设计方向：</p>
+<ol>
+<li><p>财富相关：个人当前的比赛积分由当前持有的比赛专用财富决定</p>
+</li>
+<li><p>胜负相关：个人当前的比赛积分由本次比赛中的胜负场次数决定</p>
+</li>
+<li><p>表现相关：个人当前的比赛积分由本次比赛中的个人表现决定</p>
+</li>
+</ol>
+<p>前两者都很容易理解，第三个表现相关就比较麻烦了，个人表现如何评定呢？可能很多人第一个想到的就是ELO，只需要对ELO进行一些概念上的拓展，就可以在棋牌游戏中得到应用。</p>
+<p>首先棋牌游戏同一局游戏中的参与人数可能大于2。最简单的处理方法是按照对战阵营计算平均ELO，由于棋牌游戏的比赛ELO都是仅限本场比赛内使用，所以不存在MOBA游戏内一神拖四猪的情形。</p>
+<p>其次是表现的评定条件，存在确定单纯胜负的游戏，按照胜负计分即可；对于不存在明显胜负界定或多级胜负条件的情形，要区分对待。</p>
+<p>写到这里可能有人要问了，财富变化难道不能定义一个用户在比赛中的表现吗？答案是不完全能。试举两例如下：</p>
+<ol>
+<li><p>牌类游戏中，每局游戏的表现理论上应是<strong><em>用户每手牌表现的总和</em></strong>。以分组对抗类牌类游戏（如斗地主）为例，若一方阵营（如农民）中存在演员，那么即使该阵营中其他两方发挥很好，该局若最终失败仍会影响基于单局游戏结果的积分评定。</p>
+</li>
+<li><p>麻将游戏中，每局游戏的表现理论上应在财富相关的基础上计入<strong><em>胡大番型的情形</em></strong>。如玩家A胡16番一次，玩家B胡4番4次，那么虽然表面上两者财富变化相同，但实际上认为玩家A表现可能更优，因为麻将游戏中鼓励大番型，胡出大番型的难度远大于番型差带来的收益。</p>
+</li>
+</ol>
+<p>相比牌类游戏和麻将游戏，筹码游戏事实上是最适合直接用财富变化评定用户表现的。</p>
+<p><strong>比赛对经济系统的影响</strong></p>
+<p>棋牌比赛对游戏内经济系统的影响主要体现在以下几个方面：</p>
+<ul>
+<li>报名费<br>即参与比赛时需要消耗的费用，最基础的比赛消耗</li>
+<li>基础奖池<br>即系统自行发放的奖励，相当于免费福利</li>
+<li>累计奖池（手续费）<br>从用户手续费抽取部分抽成后累计得到的共用奖池</li>
+<li>资源竞争<br>即比赛系统对其他系统的影响，玩家同一时间内只能在一个系统中游玩，不同系统的财富单位时间消耗不同，就会对整个游戏的经济系统产生影响</li>
+<li>玩家竞争<br>比赛是强PVP玩法，若存在有限次付费复活、筹码重购增购等模式，可以增加消耗产出</li>
+</ul>
+<p>通常来讲，<br>筹码类游戏中，比赛往往是消耗大头。通过大奖赛的高额入场费和筹码重购增购，可以达到可观的消耗，<br>牌类游戏和麻将游戏中，受自身玩法限制，比赛大多只是作为丰富游戏内容的一个手段和运营推广的手段，并不是产品的核心营收点。</p>
+<p>说到这里，有人可能要举JJ比赛的例子来质疑我。其实仔细玩过就发现，JJ虽然表面上没有所谓金币场，游戏内容全部是比赛，但其比赛可以分为两类，第一类是周期极短速度极快的人满即开赛和定局赛，第二类是周期相对较长奖励较高的定时赛。第一类在游戏中其实就扮演了类似其他棋牌游戏中类似金币场的角色，为用户提供了日常的基础游戏内容，所以整体来讲，比赛并不是牌类和麻将游戏中的核心玩法。</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>棋牌游戏做比赛，做其他游戏系统一样：</p>
+<p>第一，想清楚做系统的目的，不要人有我有，人说我做<br>第二，想清楚选取什么类型最合适，不要拿来主义<br>第三，想清楚核心功能是什么，不要抓了芝麻，丢了西瓜<br>第四，想清楚这个系统对已有系统的影响和未来设计的影响，不要毁了前人大树，断了自己后路</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/棋牌-比赛/" rel="tag"># 棋牌 比赛</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/26/2018022601/" rel="next" title="小谈伤害公式">
+                <i class="fa fa-chevron-left"></i> 小谈伤害公式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/07/2018030701/" rel="prev" title="为什么我们喜欢玩舰C-like游戏">
+                为什么我们喜欢玩舰C-like游戏 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myavatar.jpg"
+                alt="Fancydz" />
+            
+              <p class="site-author-name" itemprop="name">Fancydz</p>
+              <p class="site-description motion-element" itemprop="description">Game for Fun, Not for Food</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:fzaq@qq.com" target="_blank" title="Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://steamcommunity.com/id/fancydz/" target="_blank" title="Steam">
+                      
+                        <i class="fa fa-fw fa-steam"></i>Steam</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#棋牌比赛设计"><span class="nav-number">2.</span> <span class="nav-text">棋牌比赛设计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#比赛目的"><span class="nav-number">2.1.</span> <span class="nav-text">比赛目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比赛分类"><span class="nav-number">2.2.</span> <span class="nav-text">比赛分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#赛制分类"><span class="nav-number">2.3.</span> <span class="nav-text">赛制分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比赛设计"><span class="nav-number">2.4.</span> <span class="nav-text">比赛设计</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">3.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fancydz</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v6.0.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.0.2"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16-next.png?v=6.0.2">
+
+
+  <link rel="mask-icon" href="/images/favicon/safari-pinned-tag-next.svg?v=6.0.2" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="数据," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="关键词： FGO 数据分析 爬虫 本研究通过分析国服攒石效率，为FGO国服攒石党提供攒石效率参考，并为今后的抽卡和氪金做好规划。 定义攒石 攒石即指通过非付费手段获取尽可能多的扭蛋代币用于抽卡，由于FGO中最主要的扭蛋代币是圣晶石，所以又称为攒石。 扭蛋代币 圣晶石：FGO中的付费货币，1抽=3石头呼符：FGO中的免费货币，1抽=1呼符 扭蛋代币来源 为了方便讨论，将发放扭蛋代币的运营活动分为以下">
+<meta name="keywords" content="数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FGO国服圣晶石攒石效率研究">
+<meta property="og:url" content="https://fancydz.github.io/2018/01/26/2018012601/index.html">
+<meta property="og:site_name" content="稀奇古怪研究室">
+<meta property="og:description" content="关键词： FGO 数据分析 爬虫 本研究通过分析国服攒石效率，为FGO国服攒石党提供攒石效率参考，并为今后的抽卡和氪金做好规划。 定义攒石 攒石即指通过非付费手段获取尽可能多的扭蛋代币用于抽卡，由于FGO中最主要的扭蛋代币是圣晶石，所以又称为攒石。 扭蛋代币 圣晶石：FGO中的付费货币，1抽=3石头呼符：FGO中的免费货币，1抽=1呼符 扭蛋代币来源 为了方便讨论，将发放扭蛋代币的运营活动分为以下">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://i.imgur.com/PkkLIe4.png">
+<meta property="og:image" content="https://fancydz.github.io/2018/01/26/2018012601/(.*?)">
+<meta property="og:image" content="https://i.imgur.com/LkFCFOT.png">
+<meta property="og:image" content="http://img.nga.cn/attachments/mon_201712/14/f0Q5-hrp9KhT1kSd8-51.png">
+<meta property="og:updated_time" content="2018-01-31T13:12:13.718Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="FGO国服圣晶石攒石效率研究">
+<meta name="twitter:description" content="关键词： FGO 数据分析 爬虫 本研究通过分析国服攒石效率，为FGO国服攒石党提供攒石效率参考，并为今后的抽卡和氪金做好规划。 定义攒石 攒石即指通过非付费手段获取尽可能多的扭蛋代币用于抽卡，由于FGO中最主要的扭蛋代币是圣晶石，所以又称为攒石。 扭蛋代币 圣晶石：FGO中的付费货币，1抽=3石头呼符：FGO中的免费货币，1抽=1呼符 扭蛋代币来源 为了方便讨论，将发放扭蛋代币的运营活动分为以下">
+<meta name="twitter:image" content="https://i.imgur.com/PkkLIe4.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.2',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: 'H5SX4OP1QL',
+      apiKey: '70f7192250f464bfe95d7a914ddbeec6',
+      indexName: 'prod_blog1',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://fancydz.github.io/2018/01/26/2018012601/"/>
+
+
+
+
+
+  <title>FGO国服圣晶石攒石效率研究 | 稀奇古怪研究室</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">稀奇古怪研究室</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">分享游戏设计心得</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fancydz.github.io/2018/01/26/2018012601/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fancydz">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myavatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="稀奇古怪研究室">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">FGO国服圣晶石攒石效率研究</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-26T15:01:54+08:00">
+                2018-01-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>关键词： FGO 数据分析 爬虫</p>
+<p>本研究通过分析国服攒石效率，为FGO国服攒石党提供攒石效率参考，并为今后的抽卡和氪金做好规划。</p>
+<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p><strong>攒石</strong></p>
+<p>攒石即指通过非付费手段获取尽可能多的扭蛋代币用于抽卡，由于FGO中最主要的扭蛋代币是圣晶石，所以又称为攒石。</p>
+<p><strong>扭蛋代币</strong></p>
+<p>圣晶石：FGO中的付费货币，1抽=3石头<br>呼符：FGO中的免费货币，1抽=1呼符</p>
+<p><strong>扭蛋代币来源</strong></p>
+<p>为了方便讨论，将发放扭蛋代币的运营活动分为以下几类：<br><img src="https://i.imgur.com/PkkLIe4.png" alt=""></p>
+<p>此外，还有以下非运营事件的途径可以获取免费扭蛋代币：</p>
+<ul>
+<li>英灵羁绊等级提升奖励</li>
+<li>剧情/FREE/活动关卡通关奖励</li>
+<li>御主周常任务奖励</li>
+<li>连续、累计签到奖励</li>
+</ul>
+<h1 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h1><p>数据来源1：<a href="http://fgo.biligame.com/news.html" target="_blank" rel="noopener">FGO国服官网</a></p>
+<ul>
+<li>爬取所有发放过圣晶石的活动内容，筛选其奖励内容、日期</li>
+<li>对于类似“奖励有效期X天”的奖励描述，按用户在奖励发放第一天领取处理</li>
+<li>根据活动内容，人工标注其对应事件等级</li>
+</ul>
+<p>数据来源2：<a href="https://tieba.baidu.com/p/4956528970" target="_blank" rel="noopener">《我是如何把休闲手游玩成地狱难度的》——一张卡不抽攒石贴 by雷酒业</a></p>
+<ul>
+<li>爬取所有楼主的屏幕截图，同时记录截图对应的发帖日期</li>
+<li>人工记录发帖日期对应的持有圣晶石和呼符数量</li>
+</ul>
+<p>对数据来源2做补充说明如下：</p>
+<ul>
+<li>该记录贴记录了一个安卓国服玩家，在不抽卡不氪金的前提下积攒圣晶石和护符的情况；</li>
+<li>自2016.11国服安卓开服起，截至2017.11.02，安卓区预约号，自开服首日登录起从未断签；</li>
+<li>剧情奖励全拿，活动石头护符全拿，每周御主任务全部完成；</li>
+<li>B叔绊10清姬绊8，lily信长阿拉什R无毛斯巴达绊6，其他全绊5；</li>
+</ul>
+<h1 id="数据爬取"><a href="#数据爬取" class="headerlink" title="数据爬取"></a>数据爬取</h1><p>该爬虫实现比较简单，不再赘述，仅给出核心部分及注释</p>
+ <pre>
+#!/bin/env python
+# by Fancydz
+# -*- coding: utf-8 -*-
+# FGO数据分析爬取
+import ……
+
+#抓取html内容
+def get_page(url):
+……
+
+#抓取图片
+def read_image(url):
+……
+
+#得到图片url列表
+def get_pictures_url_list(url):
+    html = get_page(url)
+    l = re.findall(r'<img class="BDE_Image" pic_type="0" width="\d\d\d" height="\d\d\d" src="(.*?)" ',html)="" return="" l="" #获取图片时间戳并格式化="" def="" get_pictures_date(url,picsrc):="" html="get_page(url)" #筛选url列表中的图片时间戳="" mypattern="re.compile('src="'" +="" picsrc="" '"'="" '.*?'="" '<span="">([12][\d]{3}-[10][\d]-[0123][\d] [0-2][\d]:[0-5][\d])',re.S)
+    pic_date = re.findall(mypattern, html)
+    #由于文件名不支持'-'、':'等字符，替换为空
+    for i in range(0,len(pic_date)):
+        pic_date[i] = pic_date[i].replace("-", "")
+        pic_date[i] = pic_date[i].replace(":","")
+        pic_date[i] = pic_date[i].replace(" ", "")
+    if len(pic_date)>0:
+        return pic_date
+    #处理超时情形
+    else:
+        print 'not found in ' + picsrc
+        pic_date = '010'
+        return pic_date
+
+#下载图片并存储到本地文件夹
+def image_save(url,date,order):
+……
+
+#准备存放图片的文件夹，并进入到指定路径
+def folder_prepare(folder):
+……
+
+#主函数（单页，稍加改动即可实现复数页循环）
+def main():
+    l = []
+    mydate = []
+    url = 'https://tieba.baidu.com/p/4956528970?see_lz=1&pn=1'
+    l += get_pictures_url_list(url)
+    for i in range(0, len(l)):
+        mydate += get_pictures_date(url, l[i])
+        print 'finish date of'+str(i)
+    folder_prepare('pics_fgostone_1')
+    print 'amount=',len(mydate)
+    print 'picnum=',len(l)
+    for x in range(0,len(l)):
+      image_save(l[x],mydate[x],x)
+      print 'save pic'+str(x)+'success'
+
+if __name__ == '__main__':
+    main()
+    print '全部抓完啦'
+
+</pre> 
+
+<h1 id="数据分析"><a href="#数据分析" class="headerlink" title="数据分析"></a>数据分析</h1><p>首先建立日期-圣晶石、呼符的x-y散点图观察其趋势：</p>
+<p><img src="https://i.imgur.com/LkFCFOT.png" alt=""></p>
+<p>可见基本呈一次线性分布，符合常识认知，护符类似。</p>
+<p>故直接选取线性模型拟合，定义y为代币数量，x为攒石天数，易得到：</p>
+<p>（圣晶石）y = 3.6554x - 56.236</p>
+<p>（呼符）    y = 0.7169x + 4.9172    </p>
+<p>其中R^2&gt;0.95</p>
+<p>类似的，可以得到排除了A，A+B类事件后的攒石期望，得到代币数量与天数的关系式后带入x=30即可得到单月对应的代币收益期望，不再赘述。</p>
+<h1 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析"></a>结果分析</h1><p>误差因素</p>
+<ul>
+<li>完成剧情、活动关卡获得的额外代币</li>
+<li>羁绊等级提升获得的额外代币</li>
+<li>累计及连续签到获得的额外代币</li>
+<li>玩家生命周期</li>
+<li>时间修正，理论拟合时间越长拟合结果越逼近真实结果</li>
+</ul>
+<p><img src="http://img.nga.cn/attachments/mon_201712/14/f0Q5-hrp9KhT1kSd8-51.png" alt=""></p>
+<p>由上表可知，FGO的单月收益期望在50抽左右。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据/" rel="tag"># 数据</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/20/hello-world/" rel="next" title="Quick Q&A">
+                <i class="fa fa-chevron-left"></i> Quick Q&A
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/31/2018013101/" rel="prev" title="FGO国服蛋池系统研究">
+                FGO国服蛋池系统研究 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myavatar.jpg"
+                alt="Fancydz" />
+            
+              <p class="site-author-name" itemprop="name">Fancydz</p>
+              <p class="site-description motion-element" itemprop="description">Game for Fun, Not for Food</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:fzaq@qq.com" target="_blank" title="Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://steamcommunity.com/id/fancydz/" target="_blank" title="Steam">
+                      
+                        <i class="fa fa-fw fa-steam"></i>Steam</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据来源"><span class="nav-number">2.</span> <span class="nav-text">数据来源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据爬取"><span class="nav-number">3.</span> <span class="nav-text">数据爬取</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据分析"><span class="nav-number">4.</span> <span class="nav-text">数据分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结果分析"><span class="nav-number">5.</span> <span class="nav-text">结果分析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fancydz</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v6.0.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.0.2"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

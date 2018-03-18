@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16-next.png?v=6.0.2">
+
+
+  <link rel="mask-icon" href="/images/favicon/safari-pinned-tag-next.svg?v=6.0.2" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="数值," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="日常工作中，无论是活动还是系统，抽奖或类抽奖类内容都是很常见的一类内容，根据不同的情景和目的，可以有多种数值设计方式。 本文中会总结使用过的抽奖数值设计方式，为今后的类似工作内容提供参考： 首先给出奖品权重的定义： 已知奖池奖品价值和数量，为每一个奖品添加一个权重数值，使得奖品抽中概率pi与权重ki满足： 方法一：等价值抽取 即令每个物品的潜在抽取价值相等,物品的概率与物品价值完全成反比。 实现很">
+<meta name="keywords" content="数值">
+<meta property="og:type" content="article">
+<meta property="og:title" content="无保底Lottery设计拾遗">
+<meta property="og:url" content="https://fancydz.github.io/2018/02/07/2018020201/index.html">
+<meta property="og:site_name" content="稀奇古怪研究室">
+<meta property="og:description" content="日常工作中，无论是活动还是系统，抽奖或类抽奖类内容都是很常见的一类内容，根据不同的情景和目的，可以有多种数值设计方式。 本文中会总结使用过的抽奖数值设计方式，为今后的类似工作内容提供参考： 首先给出奖品权重的定义： 已知奖池奖品价值和数量，为每一个奖品添加一个权重数值，使得奖品抽中概率pi与权重ki满足： 方法一：等价值抽取 即令每个物品的潜在抽取价值相等,物品的概率与物品价值完全成反比。 实现很">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://i.imgur.com/MXHB6uD.png">
+<meta property="og:image" content="https://i.imgur.com/M3TV4nM.jpg">
+<meta property="og:image" content="https://i.imgur.com/jclynWo.png">
+<meta property="og:image" content="https://i.imgur.com/EZlJbB1.png">
+<meta property="og:image" content="https://i.imgur.com/AisITqx.png">
+<meta property="og:updated_time" content="2018-03-15T09:52:36.092Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="无保底Lottery设计拾遗">
+<meta name="twitter:description" content="日常工作中，无论是活动还是系统，抽奖或类抽奖类内容都是很常见的一类内容，根据不同的情景和目的，可以有多种数值设计方式。 本文中会总结使用过的抽奖数值设计方式，为今后的类似工作内容提供参考： 首先给出奖品权重的定义： 已知奖池奖品价值和数量，为每一个奖品添加一个权重数值，使得奖品抽中概率pi与权重ki满足： 方法一：等价值抽取 即令每个物品的潜在抽取价值相等,物品的概率与物品价值完全成反比。 实现很">
+<meta name="twitter:image" content="https://i.imgur.com/MXHB6uD.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.2',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: 'H5SX4OP1QL',
+      apiKey: '70f7192250f464bfe95d7a914ddbeec6',
+      indexName: 'prod_blog1',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://fancydz.github.io/2018/02/07/2018020201/"/>
+
+
+
+
+
+  <title>无保底Lottery设计拾遗 | 稀奇古怪研究室</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">稀奇古怪研究室</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">分享游戏设计心得</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fancydz.github.io/2018/02/07/2018020201/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fancydz">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myavatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="稀奇古怪研究室">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">无保底Lottery设计拾遗</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-07T17:25:44+08:00">
+                2018-02-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>日常工作中，无论是活动还是系统，抽奖或类抽奖类内容都是很常见的一类内容，根据不同的情景和目的，可以有多种数值设计方式。</p>
+<p>本文中会总结使用过的抽奖数值设计方式，为今后的类似工作内容提供参考：</p>
+<p>首先给出奖品权重的定义：</p>
+<p>已知奖池奖品价值和数量，为每一个奖品添加一个权重数值，使得奖品抽中概率pi与权重ki满足：<br><img src="https://i.imgur.com/MXHB6uD.png" alt=""></p>
+<p><strong>方法一：等价值抽取</strong></p>
+<p>即令每个物品的潜在抽取价值相等,物品的概率与物品价值完全成反比。</p>
+<p>实现很简单，但问题也很多，随意列举几例：</p>
+<ul>
+<li><p>指数级实现导致的缩放效应</p>
+</li>
+<li><p>抽奖成本完全由奖池奖品决定，定价十分被动</p>
+</li>
+</ul>
+<p>虽然可以通过细化权重公式解决相应的问题，但这种事后修补的形式是不值得提倡的。</p>
+<p><strong>方法二：人工拟合法</strong></p>
+<p><img src="https://i.imgur.com/M3TV4nM.jpg" alt=""></p>
+<p><em>（图片来自网络）</em></p>
+<p>见过太多人用类似的方法配抽奖数值，配个步进条手动调权重，直到数据表现符合预期，滑来滑去就是自娱自乐一天又过去了</p>
+<p>优点是还算灵活，简单活动可以拿来用，缺点就是没有依据，对复杂问题的拟合为什么不交给计算机呢</p>
+<p><strong>方法三：正态概率密度</strong></p>
+<p>利用正态分布N(μ，σ^2)的特性，μ定义为单次抽奖成本，σ根据奖池奖品价值vi和置信区间得到。</p>
+<p>其概率分布基本继承了正态分布的特征—-价值越接近预设期望的奖品，其概率越大；越偏离预设期望，其概率越小。这个特性也决定了，对于礼包、限定奖池（如福袋）等限制购买数量/抽奖次数的奖池，本方法是很经典的解决方式</p>
+<p>大体思路为：</p>
+<ul>
+<li>定μ</li>
+<li>定σ</li>
+<li>根据vi求N(μ，σ^2)下的概率密度并作为对应的权值</li>
+<li>考虑分布和置信区间定σ</li>
+</ul>
+<p>当然这个方法也存在缺陷，就是对于奖品价值差异过大的奖池适应性较差</p>
+<p><strong>方法四：最大熵方法</strong></p>
+<p><em>From：BeerRabbit via GAD</em></p>
+<p>这里只给出问题定义和结论，中间求解过程略过，感兴趣的同学可以自行前往大神<a href="http://gad.qq.com/article/detail/32193" target="_blank" rel="noopener">原文</a>观摩。</p>
+<p><img src="https://i.imgur.com/jclynWo.png" alt=""></p>
+<p>此时我们需要处理的就是在已知各阶中心矩的前提下，探讨其分布列P的存在性和唯一性的问题。</p>
+<p>最终得到分布列：</p>
+<p><img src="https://i.imgur.com/EZlJbB1.png" alt=""></p>
+<p>及有方差情形的方差约束条件：</p>
+<p><img src="https://i.imgur.com/AisITqx.png" alt=""></p>
+<p>利用该方法求得的分布列较为可靠，但论证建模较复杂。建好后可以直接拿来用。</p>
+<p>(后续待更新）</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数值/" rel="tag"># 数值</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/31/2018013101/" rel="next" title="FGO国服蛋池系统研究">
+                <i class="fa fa-chevron-left"></i> FGO国服蛋池系统研究
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/22/2018022201/" rel="prev" title="永远的七日之都体验小记">
+                永远的七日之都体验小记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myavatar.jpg"
+                alt="Fancydz" />
+            
+              <p class="site-author-name" itemprop="name">Fancydz</p>
+              <p class="site-description motion-element" itemprop="description">Game for Fun, Not for Food</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:fzaq@qq.com" target="_blank" title="Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://steamcommunity.com/id/fancydz/" target="_blank" title="Steam">
+                      
+                        <i class="fa fa-fw fa-steam"></i>Steam</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fancydz</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v6.0.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.0.2"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

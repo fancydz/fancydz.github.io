@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16-next.png?v=6.0.2">
+
+
+  <link rel="mask-icon" href="/images/favicon/safari-pinned-tag-next.svg?v=6.0.2" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="系统," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="关键词： FGO 保底 蛋池 FGO作为国内充值表现相当好的一款二次元手游，用户在其中进行付费的主要动力就是在蛋池中抽取奖品。用户之所以愿意在游戏中进行大额充值，除了游戏自身的品质和蛋池奖品自身的吸引力，也离不开蛋池本身良好的设计和完善的机制。因此本文会尝试从系统设计和保底原理两个角度对FGO国服的现有蛋池系统进行分析，为今后工作中设计类似抽奖系统提供设计灵感和经验。 蛋池系统蛋池，故名思议，就是">
+<meta name="keywords" content="系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FGO国服蛋池系统研究">
+<meta property="og:url" content="https://fancydz.github.io/2018/01/31/2018013101/index.html">
+<meta property="og:site_name" content="稀奇古怪研究室">
+<meta property="og:description" content="关键词： FGO 保底 蛋池 FGO作为国内充值表现相当好的一款二次元手游，用户在其中进行付费的主要动力就是在蛋池中抽取奖品。用户之所以愿意在游戏中进行大额充值，除了游戏自身的品质和蛋池奖品自身的吸引力，也离不开蛋池本身良好的设计和完善的机制。因此本文会尝试从系统设计和保底原理两个角度对FGO国服的现有蛋池系统进行分析，为今后工作中设计类似抽奖系统提供设计灵感和经验。 蛋池系统蛋池，故名思议，就是">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://img.nga.cn/attachments/mon_201801/21/-7Q5-ky41ZpT3cS1ly-kl.jpg">
+<meta property="og:image" content="http://img.nga.cn/attachments/mon_201702/28/f0Q2g-kenqZbT3cS19a-5y.png">
+<meta property="og:image" content="http://img.ngacn.cc/attachments/mon_201712/28/-7Q5-8comZjT3cS1hc-u0.jpg.medium.jpg">
+<meta property="og:image" content="https://i.imgur.com/wCjh9gW.png">
+<meta property="og:updated_time" content="2018-03-16T08:50:02.909Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="FGO国服蛋池系统研究">
+<meta name="twitter:description" content="关键词： FGO 保底 蛋池 FGO作为国内充值表现相当好的一款二次元手游，用户在其中进行付费的主要动力就是在蛋池中抽取奖品。用户之所以愿意在游戏中进行大额充值，除了游戏自身的品质和蛋池奖品自身的吸引力，也离不开蛋池本身良好的设计和完善的机制。因此本文会尝试从系统设计和保底原理两个角度对FGO国服的现有蛋池系统进行分析，为今后工作中设计类似抽奖系统提供设计灵感和经验。 蛋池系统蛋池，故名思议，就是">
+<meta name="twitter:image" content="http://img.nga.cn/attachments/mon_201801/21/-7Q5-ky41ZpT3cS1ly-kl.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.2',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: 'H5SX4OP1QL',
+      apiKey: '70f7192250f464bfe95d7a914ddbeec6',
+      indexName: 'prod_blog1',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://fancydz.github.io/2018/01/31/2018013101/"/>
+
+
+
+
+
+  <title>FGO国服蛋池系统研究 | 稀奇古怪研究室</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">稀奇古怪研究室</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">分享游戏设计心得</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fancydz.github.io/2018/01/31/2018013101/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fancydz">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myavatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="稀奇古怪研究室">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">FGO国服蛋池系统研究</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-31T10:28:58+08:00">
+                2018-01-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>关键词： FGO 保底 蛋池</p>
+<p>FGO作为国内充值表现相当好的一款二次元手游，用户在其中进行付费的主要动力就是在蛋池中抽取奖品。<br>用户之所以愿意在游戏中进行大额充值，除了游戏自身的品质和蛋池奖品自身的吸引力，也离不开蛋池本身良好的设计和完善的机制。因此本文会尝试从系统设计和保底原理两个角度对FGO国服的现有蛋池系统进行分析，为今后工作中设计类似抽奖系统提供设计灵感和经验。</p>
+<h1 id="蛋池系统"><a href="#蛋池系统" class="headerlink" title="蛋池系统"></a>蛋池系统</h1><p>蛋池，故名思议，就是消耗蛋池代币进行抽奖的系统。由于ZC原因，国内的蛋池系统多设计为购买道具赠送抽奖机会的机制（如FGO中设计为购买QP赠送抽奖机会），但原理还是付费奖池抽奖。</p>
+<p>本部分主要讨论蛋池系统的基础设计。</p>
+<h2 id="UP机制"><a href="#UP机制" class="headerlink" title="UP机制"></a>UP机制</h2><p>本文中提到的UP，即概率提升的奖品。每个奖池中都会有主打奖品，即概率略高于同级别奖品的特殊奖品，简称为UP。</p>
+<h2 id="蛋池种类"><a href="#蛋池种类" class="headerlink" title="蛋池种类"></a>蛋池种类</h2><ul>
+<li><strong>剧情池</strong></li>
+</ul>
+<p>必出3星以上稀有度从者或礼装，抽取1次消耗3圣晶石或1呼符</p>
+<p>常时开放，奖池内容随玩家剧情进度进展而扩展，配合新主线剧情实装搭配相应UP</p>
+<p><strong>作用：常驻卡池，使玩家始终有奖可抽</strong></p>
+<ul>
+<li><strong>限时池</strong></li>
+</ul>
+<p>必出3星以上稀有度从者或礼装，抽取1次消耗3圣晶石或1呼符</p>
+<p>限时开放，在剧情奖池基础上，添加高厨力从者、强力从者和不进入剧情池的稀有从者，是骗氪重点，大部分充值高峰均来源于此。</p>
+<p><img src="http://img.nga.cn/attachments/mon_201801/21/-7Q5-ky41ZpT3cS1ly-kl.jpg" alt=""></p>
+<p><em>&gt; 图1注：日服iOS+安卓氪金量（根据榜单信息模型测算，数据来源Priordata，图片来源NGA-FGO版）</em></p>
+<p>由于国服未来视（国服与日服游戏内容及运营节奏基本相同）的存在，国服玩家基本可预知接下来的卡池分布，故整体分布较日服更加极端。</p>
+<p><img src="http://img.nga.cn/attachments/mon_201702/28/f0Q2g-kenqZbT3cS19a-5y.png" alt=""></p>
+<p><em>&gt; 图2注：国服iOS+安卓氪金量（根据榜单信息模型测算，数据来源Priordata，图片来源NGA-FGO版）</em></p>
+<p><strong>作用：配合剧情、运营节奏，延长用户培养周期，游戏生命周期</strong></p>
+<ul>
+<li><strong>友情池</strong></li>
+</ul>
+<p>常时开放，必出1星至3星稀有度从者或礼装，抽取1次消耗20友情点</p>
+<p>常时开放，含有友情池独占奖品（即付费池中也无法抽到的物品），平时主要用于换取经验狗粮和绿方块</p>
+<p><strong>作用：友情点唯一消耗途径，享受单纯的抽卡乐趣</strong></p>
+<ul>
+<li><strong>福袋池</strong></li>
+</ul>
+<p>限时开放，通常出现在特殊重大事件，如周年、新年</p>
+<p>在剧情奖池基础上，保底机制替换为：十连必定保底限定列表中五星从者一名</p>
+<p>只能抽取一次，必须抽取十连，必须使用付费石头</p>
+<p><strong>作用：发福利，培养付费习惯</strong></p>
+<h2 id="蛋池设计"><a href="#蛋池设计" class="headerlink" title="蛋池设计"></a>蛋池设计</h2><p><strong>蛋池主题</strong></p>
+<p>每个蛋池均具有主题，每个主题持续7天或更长：</p>
+<p>主题分为如下几类：</p>
+<p>剧情类：开放新剧情关卡后，开放与剧情关卡主题相关的蛋池</p>
+<p>活动联动类：开放新活动后，开放与活动相关的蛋池，其中含有活动加成礼装可以提高活动过程中的收益</p>
+<p>联动类：旗下IP有重大活动时开放与联动内容相关的蛋池</p>
+<p>复刻类：对于高人气（充值表现好）且不常驻剧情池的英灵开放的复刻蛋池</p>
+<p>节日类：庆祝特定节日、事件开放的蛋池</p>
+<p><strong>蛋池内容</strong></p>
+<p>每个主题蛋池中含有若干组UP内容，内容可归纳为：</p>
+<ul>
+<li>活动限定从者：仅可通过特定蛋池获得             </li>
+<li>剧情限定从者：仅可通过剧情池获得         </li>
+<li>非活动限定礼装：仅可通过特定蛋池获得的通用礼装       </li>
+<li>非限定从者：可通过所有蛋池获得的从者</li>
+<li>活动限定礼装：仅可通过特定蛋池获得的活动用礼装，可增加活动收益</li>
+</ul>
+<p>每个主题蛋池期间，若有多组UP内容，则在保持蛋池主题不变的前提下定期更新蛋池内容。</p>
+<h1 id="保底原理"><a href="#保底原理" class="headerlink" title="保底原理"></a>保底原理</h1><p>本部分主要对FGO国服保底原理进行分析。</p>
+<p><strong>由于官方从未公布过具体保底机制设计，故以下内容均仅供参考分析用，不作为任何事实依据。</strong></p>
+<h2 id="基本数据"><a href="#基本数据" class="headerlink" title="基本数据"></a>基本数据</h2><p>首先列出官方公示的<strong>扭蛋出率</strong>：<br><img src="http://img.ngacn.cc/attachments/mon_201712/28/-7Q5-8comZjT3cS1hc-u0.jpg.medium.jpg" alt=""></p>
+<p>然后从坛友默默语的<a href="http://bbs.ngacn.cc/read.php?tid=12371637" target="_blank" rel="noopener">拉二池分服务器抽卡情况统计</a>中可归纳出：</p>
+<ol>
+<li>总UP率无论是5星还是4星都占同级别从者的70%</li>
+<li>同一级别多个UP从者时平均分配UP率</li>
+</ol>
+<p>然后是保底机制，官方描述为：十连保底一张四星稀有度以上卡（从者或礼装）<strong>和</strong>三星以上从者</p>
+<p>进一步明确：</p>
+<ul>
+<li>仅十连有保底，连续单抽十次无保底（即只可使用圣晶石）</li>
+<li>十连保底内容为两项，一是一张四星以上稀有度卡（从者或礼装）,二是一张三星以上稀有度的从者</li>
+</ul>
+<h2 id="保底模式"><a href="#保底模式" class="headerlink" title="保底模式"></a>保底模式</h2><p>为了方便后续讨论，做如下定义：</p>
+<p>标准奖池：标准奖池，即蛋池介绍界面注明的基础奖池<br>四星保底池：涵盖了所有四星及以上稀有度卡牌（从者、礼装均计入）<br>从者保底池：涵盖了所有从者（三星至五星）卡牌的奖池<br>保底条件A：奖品中包含一张四星以上稀有度卡（从者或礼装）<br>保底条件B：奖品中包含一张三星以上稀有度的从者</p>
+<p>按照官方给出的保底机制描述，定义三种保底机制设计模式如下：</p>
+<ol>
+<li><p><strong>预先理性处理模式</strong></p>
+<ul>
+<li>从四星保底池中抽取1个保底物A</li>
+<li>从从者保底池中抽取1个保底物B</li>
+<li>在基础奖池中完成10次随机抽取,得到Si(i=1,2…10)</li>
+<li>若不满足保底条件A，随机选取一个奖品被保底物A替代</li>
+<li>若不满足保底条件B，随机选取一个<strong>价值最低</strong>的奖品被保底物B替代</li>
+<li>完成10连抽取保底处理</li>
+</ul>
+</li>
+</ol>
+<ol>
+<li><p><strong>预先盲处理模式</strong></p>
+<ul>
+<li>从四星保底池中抽取1个保底物A</li>
+<li>从从者保底池中抽取1个保底物B</li>
+<li>在基础奖池中完成10次随机抽取,得到Si(i=1,2…10)</li>
+<li>若不满足保底条件A，随机选取一个奖品被保底物A替代</li>
+<li>若不满足保底条件B，随机选取一个非保底物A的奖品被保底物B替代</li>
+<li>完成10连抽取保底处理</li>
+</ul>
+</li>
+</ol>
+<ol>
+<li><p><strong>后处理模式</strong></p>
+<p> 较繁琐，直接上图</p>
+<p> <img src="https://i.imgur.com/wCjh9gW.png" alt=""></p>
+<p> 为了避免用户体感到保底机制的具体实现，可在全部抽奖机会产生后进行一次重排。</p>
+</li>
+</ol>
+<h2 id="保底机制对概率的影响"><a href="#保底机制对概率的影响" class="headerlink" title="保底机制对概率的影响"></a>保底机制对概率的影响</h2><p>以下分析参考了月坂雪绪 发表于NGA的 <a href="http://bbs.nga.cn/read.php?tid=11900406" target="_blank" rel="noopener">以十连保底金卡为例从经典二项分布模型上讨论所谓“保底机制”对实际概率的影响</a>。由于其模型<strong>未考虑保底三星从者</strong>的情形，在其基础上进行了补正。</p>
+<p>官方从未公布过其保底机制的细则，为了分析方便起见，假设游戏采用的是模式2（预先盲处理模式）：</p>
+<p>容易证明，<strong>预先盲处理模式与后处理模式在概率学上是等价的</strong>，过程不再赘述。</p>
+<p><em>tips:后处理模式实际只是预先盲处理模式结果中的一个次序重排的子集</em></p>
+<p>伯努利大数定律已证明，在多次相同的条件的重复试验中，频率有越接近一稳定值的趋势，当实验次数足够大时可用事件发生的频率来代替事件的概率。大样本下的抽卡抽出五星级从者这一事件符合经典二项分布，故在经典概率模型下对保底模式下的抽卡事件做出如下假设：</p>
+<p><strong>假设基础</strong></p>
+<p>假设1：每次抽卡都是独立事件。在每次实验中，“抽出五星从者”事件的发生概率均为1%。“抽出当期单UP五星从者”这一事件的发生概率均为0.7%。</p>
+<p>假设2-1：参考“预先处理模式”描述</p>
+<p>假设2-2：参考“预先盲处理模式”描述</p>
+<p>假设2-3：参考“后处理模式”描述</p>
+<p>假设3：保底的出现不会影响其他实验的结果。保底位中各星级卡片的分布比例与标准池中分布相同。</p>
+<p><strong>计算</strong></p>
+<p>考虑用户目标是抽取池中的单UP五星从者的情形：</p>
+<p>设一次十连，在没有保底的情况下，获得SSR从者数目的期望为E。</p>
+<p><em>【无保底的情形】</em></p>
+<p>根据伯努利大数定律无保底的情形，有：E=10×0.7%=0.07</p>
+<p>同时，E的概率学表现形式有E=Σ(n×P(n))，n=0-10，P(n)为十连出现n张SSR从者的概率。</p>
+<p>后续讨论方便起见，将后一项做一个拆分，分为“十连没有金卡”和“十连有金卡”两种情况。如果十连没有金卡，五星UP从者出现次数显然为0，所以我们有：</p>
+<p>E(十连没保底抽出UPSSR从者)=Σ(n×P(n且十连有金卡))+0×P(十连没金卡)=0.07</p>
+<p>得到Σ(n×P(n且十连有单UPSSR从者))=0.07</p>
+<p><em>【考虑保底的情形】</em></p>
+<p>E(十连有保底抽出单UPSSR从者)</p>
+<p>=Σ(n×P(n且十连有金卡有从者下抽到单UPSSR) + 保底机制收益</p>
+<p>=Σ(n×P(n且十连有金卡有从者)</p>
+<p>+P(十连有金卡无从者)×(4/56)</p>
+<p>+P(十连无金卡有从者)×(1/20)</p>
+<p>+P(十连无金卡无从者)×(1/20+4/56)</p>
+<p>其中</p>
+<p>P(十连有金卡无从者)=(1-0.8^10)×(0.56^10)</p>
+<p>P(十连无金卡有从者)=(0.8^10)×(1-0.56^10)</p>
+<p>P(十连无金卡无从者)=(0.8^10)×(0.56^10)</p>
+<p>得到</p>
+<p>E(十连有保底抽出单UPSSR从者)</p>
+<p>=0.07</p>
+<p>+(1-0.8^10)×(0.56^10)×(4/56)</p>
+<p>+(0.8^10)×(1-0.56^10)×(1/20)</p>
+<p>+(0.8^10)×(0.56^10)×(1/20+4/56)</p>
+<p>=0.075585356</p>
+<p><em>【引入保底机制后的收益】</em></p>
+<p>delta E=E(十连有保底抽出单UPSSR从者)-E(十连没保底抽出UPSSR从者)=0.005585356（个）</p>
+<p>相当于<strong>每抽奖一千次，保底机制带来的额外期望收益等同于多抽出5个当期单UP SSR从者</strong></p>
+<p>对应的实际SSR出率为 0.755%  </p>
+<p><strong>即保底机制带来的SSR出率增益为 0.055%</strong></p>
+<h2 id="保底机制对行为的影响"><a href="#保底机制对行为的影响" class="headerlink" title="保底机制对行为的影响"></a>保底机制对行为的影响</h2><p>FGO中实行的十连保底是严格十连保底，即用户不能通过单抽十次来触发保底机制。但在其他一些游戏的扭蛋中，存在相对宽松的十连保底，即用户可以通过单抽10次来触发保底。十连抽在这类游戏中存在的意义就是更快的消耗扭蛋券。</p>
+<p>这种保底机制看似提升了用户抽奖的整体出率，但由于存在凑保底的情形，实际上增加了用户付费的场景和动力。设想以下场景:</p>
+<p>用户A充值意愿弱，某期池子中有他想要的奖，他攒下的代币可以支持他完成18次抽奖机会，那么他就有可能为了凑保底到20次进行充值。</p>
+<p>除此之外，在宽松十连保底模式下，通过单抽触发保底是存在有效期的。这个有效期通常按池子划分，即各个池子之间的单抽保底次数是彼此独立计算的。保底有效期的存在，进一步给玩家施加压力，要求其在一个蛋池周期内投入更多的资源，凑更多的保底以获得想要的奖品。</p>
+<hr>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>本文简要分析了FGO游戏中的蛋池抽奖系统，并对国服蛋池保底机制进行了猜想和分析。</p>
+<p>保底机制在大样本中对于提高中奖几率的数学贡献并不大。按照“后处理模式”，保底机制带来的SSR出率仅相对增长7.8%，绝对增长 0.055%。其意义主要在于保障用户氪金小周期的收益相对稳定，对游戏的长线蛋池出货情况影响没有想象中的大。</p>
+<p>当然，本文中的讨论都是基于完全理想情况下的一种简单的保底设计。实际游戏中保底机制还有很多其他的设计方式，有更多隐藏的机制保障各方的利益。尽管不同的保底机制在玩家看来保底的表现都是一样的，但背后进行的抽取过程可能各有不同，恐怕这也是设计的一种魅力所在吧（笑）</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/系统/" rel="tag"># 系统</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/26/2018012601/" rel="next" title="FGO国服圣晶石攒石效率研究">
+                <i class="fa fa-chevron-left"></i> FGO国服圣晶石攒石效率研究
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/07/2018020201/" rel="prev" title="无保底Lottery设计拾遗">
+                无保底Lottery设计拾遗 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myavatar.jpg"
+                alt="Fancydz" />
+            
+              <p class="site-author-name" itemprop="name">Fancydz</p>
+              <p class="site-description motion-element" itemprop="description">Game for Fun, Not for Food</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:fzaq@qq.com" target="_blank" title="Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://steamcommunity.com/id/fancydz/" target="_blank" title="Steam">
+                      
+                        <i class="fa fa-fw fa-steam"></i>Steam</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#蛋池系统"><span class="nav-number">1.</span> <span class="nav-text">蛋池系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#UP机制"><span class="nav-number">1.1.</span> <span class="nav-text">UP机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#蛋池种类"><span class="nav-number">1.2.</span> <span class="nav-text">蛋池种类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#蛋池设计"><span class="nav-number">1.3.</span> <span class="nav-text">蛋池设计</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#保底原理"><span class="nav-number">2.</span> <span class="nav-text">保底原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本数据"><span class="nav-number">2.1.</span> <span class="nav-text">基本数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#保底模式"><span class="nav-number">2.2.</span> <span class="nav-text">保底模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#保底机制对概率的影响"><span class="nav-number">2.3.</span> <span class="nav-text">保底机制对概率的影响</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#保底机制对行为的影响"><span class="nav-number">2.4.</span> <span class="nav-text">保底机制对行为的影响</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fancydz</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v6.0.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.0.2"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
