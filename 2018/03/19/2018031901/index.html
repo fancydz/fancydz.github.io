@@ -94,7 +94,7 @@
 <meta property="og:image" content="http://300.jumpw.com/upload/2017/12/25151550906.png">
 <meta property="og:image" content="https://i.imgur.com/BILPd09.png">
 <meta property="og:image" content="https://i.imgur.com/Ed9ScCg.png">
-<meta property="og:updated_time" content="2018-03-19T16:18:39.974Z">
+<meta property="og:updated_time" content="2018-03-19T16:26:53.662Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="走格子抽奖设计小谈">
 <meta name="twitter:description" content="概要走格子抽奖是游戏中常见的抽奖方式之一。早年大富翁丢骰子走格子的玩法已经深入人心，容易理解，充满变数和乐趣，在现在的游戏中依然有较广泛的应用。 为了方便讨论，我们先引入计算机图论中的一个概念：连通图。  A graph is connected when there is a path between every pair of vertices. In a connected graph, t">
@@ -425,7 +425,8 @@ for current_round in range(1,max_round+1):
         if current_pos in range(1, end_pos+1):
             count_list[current_pos-1] += 1
 print count_list
-</code></pre><p>分别求路径长度为10，20下各个路径点的到达次数分布如下：<br><img src="https://i.imgur.com/zK5ymRQ.png" alt=""><br><img src="https://i.imgur.com/17L9tlU.png" alt=""></p>
+</code></pre><p>分别求路径长度为10，20下各个路径点的到达次数分布如下：<br><img src="https://i.imgur.com/zK5ymRQ.png" alt=""></p>
+<p><img src="https://i.imgur.com/17L9tlU.png" alt=""></p>
 <p>大致看来有两个特征：</p>
 <ol>
 <li>2-7呈一个明显的局部区间，7全局最高，区间内概率配比相对稳定且与路径长度无关</li>
