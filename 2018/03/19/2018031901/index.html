@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16-next.png?v=6.0.2">
+
+
+  <link rel="mask-icon" href="/images/favicon/safari-pinned-tag-next.svg?v=6.0.2" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="抽奖设计," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="概要走格子抽奖是游戏中常见的抽奖方式之一。早年大富翁丢骰子走格子的玩法已经深入人心，容易理解，充满变数和乐趣，在现在的游戏中依然有较广泛的应用。 为了方便讨论，我们先引入计算机图论中的一个概念：连通图。  A graph is connected when there is a path between every pair of vertices. In a connected graph, t">
+<meta name="keywords" content="抽奖设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="走格子抽奖设计小谈">
+<meta property="og:url" content="https://fancydz.github.io/2018/03/19/2018031901/index.html">
+<meta property="og:site_name" content="稀奇古怪研究室">
+<meta property="og:description" content="概要走格子抽奖是游戏中常见的抽奖方式之一。早年大富翁丢骰子走格子的玩法已经深入人心，容易理解，充满变数和乐趣，在现在的游戏中依然有较广泛的应用。 为了方便讨论，我们先引入计算机图论中的一个概念：连通图。  A graph is connected when there is a path between every pair of vertices. In a connected graph, t">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://i.imgur.com/WGhaTHj.png">
+<meta property="og:image" content="https://i.imgur.com/4T57zFw.jpg">
+<meta property="og:image" content="https://i.imgur.com/KlVUnVb.jpg">
+<meta property="og:image" content="https://i.imgur.com/lnoc7Kt.png">
+<meta property="og:image" content="https://i.imgur.com/XztV8xZ.png">
+<meta property="og:image" content="https://i.imgur.com/zK5ymRQ.png">
+<meta property="og:image" content="https://i.imgur.com/17L9tlU.png">
+<meta property="og:image" content="http://300.jumpw.com/upload/2017/12/2514104642.jpg">
+<meta property="og:image" content="http://300.jumpw.com/upload/2017/12/25151550906.png">
+<meta property="og:image" content="https://i.imgur.com/BILPd09.png">
+<meta property="og:image" content="https://i.imgur.com/Ed9ScCg.png">
+<meta property="og:updated_time" content="2018-03-19T16:18:39.974Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="走格子抽奖设计小谈">
+<meta name="twitter:description" content="概要走格子抽奖是游戏中常见的抽奖方式之一。早年大富翁丢骰子走格子的玩法已经深入人心，容易理解，充满变数和乐趣，在现在的游戏中依然有较广泛的应用。 为了方便讨论，我们先引入计算机图论中的一个概念：连通图。  A graph is connected when there is a path between every pair of vertices. In a connected graph, t">
+<meta name="twitter:image" content="https://i.imgur.com/WGhaTHj.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.2',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: 'H5SX4OP1QL',
+      apiKey: '70f7192250f464bfe95d7a914ddbeec6',
+      indexName: 'prod_blog1',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://fancydz.github.io/2018/03/19/2018031901/"/>
+
+
+
+
+
+  <title>走格子抽奖设计小谈 | 稀奇古怪研究室</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">稀奇古怪研究室</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">分享游戏设计心得</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fancydz.github.io/2018/03/19/2018031901/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fancydz">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myavatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="稀奇古怪研究室">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">走格子抽奖设计小谈</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-19T12:41:08+08:00">2018-03-19</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h1><p>走格子抽奖是游戏中常见的抽奖方式之一。早年大富翁丢骰子走格子的玩法已经深入人心，容易理解，充满变数和乐趣，在现在的游戏中依然有较广泛的应用。</p>
+<p>为了方便讨论，我们先引入计算机图论中的一个概念：连通图。</p>
+<blockquote>
+<p>A graph is connected when there is a path between every pair of vertices. In a <strong>connected graph</strong>, there are <strong>no unreachable vertices</strong>. A graph that is not connected is disconnected. A graph G is said to be disconnected if there exist two nodes in G such that no path in G has those nodes as endpoints.</p>
+</blockquote>
+<p><em>From Wikipedia - Connected graph</em></p>
+<p>简单的讲，若无向图G中任意一对顶点都是连通的，则此图是连通图。</p>
+<p>以下是从网络中找到的一写连通图类抽奖玩法截图：</p>
+<p><img src="https://i.imgur.com/WGhaTHj.png" alt=""><br><em>剑灵-魔皇棋盘</em></p>
+<p>无向图，非全奖</p>
+<p><img src="https://i.imgur.com/4T57zFw.jpg" alt=""><br><em>蜀山飘渺录-夺宝阁</em></p>
+<p>无向图，全奖</p>
+<p><img src="https://i.imgur.com/KlVUnVb.jpg" alt=""><br><em>大富翁8-游戏地图</em></p>
+<p>无向连通图，全奖</p>
+<p>本文主要讨论两个问题：</p>
+<ol>
+<li>走格子抽奖玩法的设计要素</li>
+<li>走格子抽奖玩法的实例分析</li>
+</ol>
+<h1 id="设计要素"><a href="#设计要素" class="headerlink" title="设计要素"></a>设计要素</h1><h2 id="地图设计"><a href="#地图设计" class="headerlink" title="地图设计"></a>地图设计</h2><p>地图是连通图类抽奖的基础和难点。在抽奖活动中通常需要考虑两个问题。</p>
+<p>一是地图路线。长度有多长？是否有岔路？若有岔路岔路的分支逻辑如何制定？每次行动的距离在什么区间？每次行动，落在行动距离区间上各个点的概率是否相同？</p>
+<p>二是地图点内容。每格的内容是什么？是奖品还是事件？如果是奖品，如何控制奖品价值的投放？如果是事件，会对玩家产生什么影响？</p>
+<p>以上两点问题基本决定了整个抽奖系统的逻辑与进出模型，需要综合考虑。</p>
+<h2 id="玩法设计"><a href="#玩法设计" class="headerlink" title="玩法设计"></a>玩法设计</h2><p>解决了之前的地图设计，玩法设计相较而言就是比较容易解决的问题了。此处的玩法设计主要是针对基础掷骰子走格子玩法进行的改良和补充。</p>
+<ol>
+<li>获取行动次数的方式：定价、购买次数限制、非付费获取方式</li>
+<li>阶段性/保底奖励的设计：政策风险</li>
+<li>与其他系统的联系：奖品内容和行动次数道具</li>
+</ol>
+<h1 id="实例分析"><a href="#实例分析" class="headerlink" title="实例分析"></a>实例分析</h1><p>选取几个走格子抽奖设计过程中的典型问题进行分析：</p>
+<h2 id="有限长线性路径到达终点的成本"><a href="#有限长线性路径到达终点的成本" class="headerlink" title="有限长线性路径到达终点的成本"></a>有限长线性路径到达终点的成本</h2><p>Q：</p>
+<blockquote>
+<p>有一个长L格的线性路径，玩家行动IDX。格子上不存在会影响玩家行动的随机事件。点数和大于等于L均视为到达终点。</p>
+<p>若L=10,I=1,X=6,求玩家到达终点需要投掷骰子次数N的期望。</p>
+</blockquote>
+<p>A：</p>
+<p>解决方法有很多，例如卷积公式、马科夫过程、递归、程序模拟等。</p>
+<p>试举两解如下：</p>
+<p><strong>i. 递归</strong></p>
+<blockquote>
+<p>设点数和大于等于G时需要投骰子的次数为N，Px为投出各点数的概率，有：</p>
+<p>N(G)=P6×N(G-6)+P5×N(G-5)+P4×N(G-4)+P3×N(G-3)+P2×N(G-2)+P1×N(G-1)+1</p>
+<p>其中</p>
+<p>N(0)=N(-1)=N(-2)=N(-3)=N(-4)=N(-5)=0</p>
+<p>P1=P2=P3=P4=P5=P6=1/6</p>
+<p>求解得到：</p>
+<p><img src="https://i.imgur.com/lnoc7Kt.png" alt=""></p>
+</blockquote>
+<p><strong>ii. 程序模拟</strong></p>
+<blockquote>
+<p>建立一个[1,6]的离散均匀分布来作为每次投骰子的结果集，然后写个简单的循环就成，求解得到：</p>
+<p><img src="https://i.imgur.com/XztV8xZ.png" alt=""></p>
+</blockquote>
+<p>误差可接受，故得到一个10格长线性路径到达终点需要的掷骰子次数为3.32次。</p>
+<h2 id="有限长线性路径落在各个格子上的概率"><a href="#有限长线性路径落在各个格子上的概率" class="headerlink" title="有限长线性路径落在各个格子上的概率"></a>有限长线性路径落在各个格子上的概率</h2><p><strong>真实掷骰的情形</strong></p>
+<p>真实掷骰即每次掷骰子是公平的，即每次掷出1-6点的概率均为1/6</p>
+<p>与之前计算终点到达成本相似，有多种解决方法，这里直接使用程序模拟,因为其实现非常简单：</p>
+<pre><code># coding=utf-8
+from __future__ import division
+import random
+import math
+max_round = 1000000
+current_round = 1
+min_rd = 1
+max_rd = 6
+start_pos = 1
+current_pos = 0
+end_pos = 10
+count_list = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+for current_round in range(1,max_round+1):
+    current_pos = start_pos
+    while current_pos &lt; end_pos:
+        current_pos += random.randint(min_rd, max_rd)
+        if current_pos in range(1, end_pos+1):
+            count_list[current_pos-1] += 1
+print count_list
+</code></pre><p>分别求路径长度为10，20下各个路径点的到达次数分布如下：<br><img src="https://i.imgur.com/zK5ymRQ.png" alt=""><br><img src="https://i.imgur.com/17L9tlU.png" alt=""></p>
+<p>大致看来有两个特征：</p>
+<ol>
+<li>2-7呈一个明显的局部区间，7全局最高，区间内概率配比相对稳定且与路径长度无关</li>
+<li>路径后部的点概率分布趋于均衡，路径长度越长该现象越明显</li>
+</ol>
+<p>由于特征2的存在，导致公平掷骰下的有限长路径走格子游戏中，路线后段的落中概率几乎趋同，除了通过控制单格投放奖品的数量和投放相同奖品的格数，我一时半会还想不到其他可以有效区分奖品概率的方式。</p>
+<p>既然存在奖品难以配置的问题，那为什么还有很多游戏做同类型的抽奖玩法呢？解答这个问题前，我们可以先去浏览以下对此类玩法进行了概率公示的游戏，其奖品概率分布到底是什么样的。</p>
+<p><img src="http://300.jumpw.com/upload/2017/12/2514104642.jpg" alt=""></p>
+<p><img src="http://300.jumpw.com/upload/2017/12/25151550906.png" alt=""></p>
+<p>观察到这是一个60格长的线性路径，其公布的奖品共有27种，原因是同一种奖品在多个格子进行了配置的缘故。</p>
+<p>我们主要关注其概率分布。可以从很多个角度说明其采用的很有可能不是真实掷骰：</p>
+<ul>
+<li>减速之球位于44顺位，残废之球位于6顺位，然而概率均是0.20%</li>
+<li>投掷能量和铁铲，这两个奖品均分布在3格，投掷能量在前30格，铁铲在后30格，但概率和均为4.18%</li>
+<li>属性洗炼卡位于3顺位，承太郎皮肤位于4顺位，然而承太郎皮肤的概率是洗炼卡概率的2倍</li>
+<li>还有很多，不再一一列举</li>
+</ul>
+<p>以上现象均与之前程序模拟的结果相悖。我们有一定的根据认定这款游戏采用的不是真实掷骰。事实上，如果研究其他游戏中的类似系统，不难发现其概率分布大都不符合真实掷骰子的情形，说明其采用的可能是其他方式，具体讨论见后续章节。</p>
+<p><strong>不公平掷骰的情形</strong></p>
+<p>为了控制奖品成本，即让物品抽中的概率与其价值成反比，我们可以人为的<br>干预每次掷骰子产出结果的概率。以下给出一种最简单的实现。</p>
+<p>已知路径n格上的奖品各自价值vi，定义一个权重pi，大体满足pi∝(1/vi)即可。</p>
+<p>若每次行动距离的区间为[1,l]，本次行动起点为s，则本次行动得到行动距离k的概率为：</p>
+<p>P(k)=p(s+k)/sigma(p(i),i= s to s+l)，k∈[1,l]</p>
+<p>即由行动距离范围内的奖品权值分布影响行动距离。</p>
+<p>当然以上给出的只是一种简单实现，通过更复杂的设计，设计合理时可实现上一章节截图中的整体奖品概率可控。</p>
+<h2 id="连通图落在各个格子上的概率"><a href="#连通图落在各个格子上的概率" class="headerlink" title="连通图落在各个格子上的概率"></a>连通图落在各个格子上的概率</h2><p>连通图情形下的走格子游戏，就与真实的大富翁游戏非常接近了。真实游戏中使用这种模型的走格子抽奖玩法的情形可能比较少，因为完成这样一个玩法的工作量其实跟做一个类大富翁游戏差不了多少（笑）</p>
+<p>为了方便讨论，先对模型做以下简化：</p>
+<ol>
+<li>岔路上选择每一个相邻路径点的概率均相同</li>
+<li>游戏路径上每个节点的度不小于2</li>
+<li>无向连通图</li>
+</ol>
+<p>无向连通图中，玩家每次行动的步数在地图足够大时其实已经不影响实际结果，且满足马科夫性质。</p>
+<p><img src="https://i.imgur.com/BILPd09.png" alt=""></p>
+<p>先从以上最简单的九宫格无向连通图开始分析。<br>路径点1作为起点，每次掷骰子，然后开始行动。大样本下其实起点的选取和每次掷骰子的点数都不影响结果。故每次行动都从当前节点的相邻节点中平均概率选择一个路径点作为行走目标，测试一下行走100000步后，玩家在各个路径点停留的次数，继续使用程序模拟：</p>
+<pre><code>local tbMap = {
+    [1] = { 2, 4 },
+    [2] = { 1, 3, 5 },
+    [3] = { 2, 6 },
+    [4] = { 1, 5, 7 },
+    [5] = { 2, 4, 6, 8 },
+    [6] = { 3, 5, 9 },
+    [7] = { 4, 8 },
+    [8] = { 5, 7, 9 },
+    [9] = { 6, 8 },
+}
+function FindNextPos(nCurPos)
+    local tbNext = tbMap[nCurPos]
+    local tbPos = {}
+    for k, v in pairs(tbNext) do
+        table.insert(tbPos, v)
+    end
+    local nNext = tbPos[math.random(#tbPos)] or 0
+    return nNext
+end
+function tst_roll_analyze(nRoll)
+    local tbResult = {}
+    local nCurPos = 5
+    for i = 1, nRoll do
+        nCurPos = FindNextPos(nCurPos)
+        tbResult[nCurPos] = tbResult[nCurPos] or 0
+        tbResult[nCurPos] = tbResult[nCurPos] + 1
+    end
+    for i = 1, #tbResult do
+        print(tbResult[i])
+    end
+end
+tst_roll_analyze(100000)
+</code></pre><p>得到的结果如下</p>
+<p><img src="https://i.imgur.com/Ed9ScCg.png" alt=""></p>
+<p>无向连通图情形下，得到的结果显然有规律的多。猜测如下：</p>
+<ul>
+<li>落在格子上的概率与该格子的度成正比例关系</li>
+</ul>
+<p>感兴趣的同好可以继续在更复杂的无向连通图上测试该结论，其实仍然成立。但数学形式的证明目前还无法给出（毕竟我太菜了）</p>
+<p>对应到具体走格子抽奖活动上，如果是无向连通图，那么只需要在度数高的节点上配置低价值奖品即可。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>走格子抽奖活动有多种实现方式，相较而言市面上目前使用比较多的是有限长度的线性路径。不同类型的走格子抽奖活动其奖品概率分布完全不同，需要认真体会其中原理和数值配置，根据实际情况选择适合的模型进行设计。</p>
+
+      
+    </div>
+    
+    
+    
+    
+      <div>
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS�� sweetalert ���޸�·�� -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>Title:</span><a href="/2018/03/19/2018031901/">走格子抽奖设计小谈</a></p>
+  <p><span>Author:</span><a href="/" title="���� Fancydz �ĸ��˲���">Fancydz</a></p>
+  <p><span>Publish:</span>2018.03.19  12:03</p>
+  <p><span>Update:</span>2018.03.20  00:03</p>
+  <p><span>Path:</span><a href="/2018/03/19/2018031901/" title="走格子抽奖设计小谈">https://fancydz.github.io/2018/03/19/2018031901/</a>
+    <span class="copy-path"  title="Click to copy path"><i class="fa fa-clipboard" data-clipboard-text="https://fancydz.github.io/2018/03/19/2018031901/"  aria-label="Copy Finished"></i></span>
+  </p>
+  <p><span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)</a> This work is licensed under a Creative Commons Attribution 4.0 International License.</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: 'Copy Finished',
+          icon: "success", 
+          showConfirmButton: true
+          });
+	});
+    });  
+</script>
+
+      </div>
+    
+	
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/抽奖设计/" rel="tag"># 抽奖设计</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/07/2018030701/" rel="next" title="为什么我们喜欢玩舰C-like游戏">
+                <i class="fa fa-chevron-left"></i> 为什么我们喜欢玩舰C-like游戏
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myavatar.jpg"
+                alt="Fancydz" />
+            
+              <p class="site-author-name" itemprop="name">Fancydz</p>
+              <p class="site-description motion-element" itemprop="description">Game for Fun, Not for Food</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:fzaq@qq.com" target="_blank" title="Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://steamcommunity.com/id/fancydz/" target="_blank" title="Steam">
+                      
+                        <i class="fa fa-fw fa-steam"></i>Steam</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概要"><span class="nav-number">1.</span> <span class="nav-text">概要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设计要素"><span class="nav-number">2.</span> <span class="nav-text">设计要素</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#地图设计"><span class="nav-number">2.1.</span> <span class="nav-text">地图设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#玩法设计"><span class="nav-number">2.2.</span> <span class="nav-text">玩法设计</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实例分析"><span class="nav-number">3.</span> <span class="nav-text">实例分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#有限长线性路径到达终点的成本"><span class="nav-number">3.1.</span> <span class="nav-text">有限长线性路径到达终点的成本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有限长线性路径落在各个格子上的概率"><span class="nav-number">3.2.</span> <span class="nav-text">有限长线性路径落在各个格子上的概率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连通图落在各个格子上的概率"><span class="nav-number">3.3.</span> <span class="nav-text">连通图落在各个格子上的概率</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fancydz</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v6.0.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.0.2"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
