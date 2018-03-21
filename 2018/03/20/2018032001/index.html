@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16-next.png?v=6.0.2">
+
+
+  <link rel="mask-icon" href="/images/favicon/safari-pinned-tag-next.svg?v=6.0.2" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="棋牌," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言一个游戏好不好玩，可能受玩法、操作体验等多个因素影响； 但一个游戏成不成功，很大程度来源于这个游戏的经济系统是否完善。 棋牌游戏也是一样。特别是对于依靠游戏币流通而获利的游戏币场棋牌游戏，经济系统的设计更是重中之重。 本文会从游戏币模式和房卡模式两个角度尝试分析棋牌游戏的经济系统设计。由于种种原因，文中已略去部分关键细节。如有语焉不详处，还请读者谅解。 预热：一分钟了解棋牌游戏讨论正题之前，先">
+<meta name="keywords" content="棋牌">
+<meta property="og:type" content="article">
+<meta property="og:title" content="棋牌游戏的经济系统设计">
+<meta property="og:url" content="https://fancydz.github.io/2018/03/20/2018032001/index.html">
+<meta property="og:site_name" content="稀奇古怪研究室">
+<meta property="og:description" content="前言一个游戏好不好玩，可能受玩法、操作体验等多个因素影响； 但一个游戏成不成功，很大程度来源于这个游戏的经济系统是否完善。 棋牌游戏也是一样。特别是对于依靠游戏币流通而获利的游戏币场棋牌游戏，经济系统的设计更是重中之重。 本文会从游戏币模式和房卡模式两个角度尝试分析棋牌游戏的经济系统设计。由于种种原因，文中已略去部分关键细节。如有语焉不详处，还请读者谅解。 预热：一分钟了解棋牌游戏讨论正题之前，先">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://i.imgur.com/K0nytO7.png">
+<meta property="og:image" content="http://gameweb-img.qq.com/gad/20150601/2cd845311aa14e35896270d81b9b50d3.001.1433145886.png">
+<meta property="og:image" content="https://wpimg.wallstcn.com/ca18257a-d16c-4df0-b444-edf3a1033cda.png">
+<meta property="og:updated_time" content="2018-03-21T14:29:52.153Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="棋牌游戏的经济系统设计">
+<meta name="twitter:description" content="前言一个游戏好不好玩，可能受玩法、操作体验等多个因素影响； 但一个游戏成不成功，很大程度来源于这个游戏的经济系统是否完善。 棋牌游戏也是一样。特别是对于依靠游戏币流通而获利的游戏币场棋牌游戏，经济系统的设计更是重中之重。 本文会从游戏币模式和房卡模式两个角度尝试分析棋牌游戏的经济系统设计。由于种种原因，文中已略去部分关键细节。如有语焉不详处，还请读者谅解。 预热：一分钟了解棋牌游戏讨论正题之前，先">
+<meta name="twitter:image" content="https://i.imgur.com/K0nytO7.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.2',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: 'H5SX4OP1QL',
+      apiKey: '70f7192250f464bfe95d7a914ddbeec6',
+      indexName: 'prod_blog1',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://fancydz.github.io/2018/03/20/2018032001/"/>
+
+
+
+
+
+  <title>棋牌游戏的经济系统设计 | 稀奇古怪研究室</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">稀奇古怪研究室</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">分享游戏设计心得</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fancydz.github.io/2018/03/20/2018032001/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fancydz">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myavatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="稀奇古怪研究室">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">棋牌游戏的经济系统设计</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-20T23:16:26+08:00">2018-03-20</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>一个游戏好不好玩，可能受玩法、操作体验等多个因素影响；</p>
+<p>但一个游戏成不成功，很大程度来源于这个游戏的经济系统是否完善。</p>
+<p>棋牌游戏也是一样。特别是对于依靠游戏币流通而获利的游戏币场棋牌游戏，经济系统的设计更是重中之重。</p>
+<p>本文会从游戏币模式和房卡模式两个角度尝试分析棋牌游戏的经济系统设计。由于种种原因，文中已略去部分关键细节。如有语焉不详处，还请读者谅解。</p>
+<h1 id="预热：一分钟了解棋牌游戏"><a href="#预热：一分钟了解棋牌游戏" class="headerlink" title="预热：一分钟了解棋牌游戏"></a>预热：一分钟了解棋牌游戏</h1><p>讨论正题之前，先对棋牌游戏做一个简单的入门级介绍：</p>
+<h2 id="棋牌游戏的演变"><a href="#棋牌游戏的演变" class="headerlink" title="棋牌游戏的演变"></a>棋牌游戏的演变</h2><p>1998：鲍岳桥开创联众，拉开了中国棋牌游戏的大幕；</p>
+<p>2003.8：QQ游戏横空出世，腾讯依靠自身巨大的用户基量脱颖而出；</p>
+<p>2008：老K游戏(捕鱼)，JJ比赛（比赛）,博雅互动（德州），面对面（视频）百花齐放，行业多元化，垂直化特征渐趋明显；</p>
+<p>2016：闲徕互娱“房卡约局”结合“售卡抽成”一炮走红，线下关系走向线上</p>
+<h2 id="棋牌游戏的用户特征"><a href="#棋牌游戏的用户特征" class="headerlink" title="棋牌游戏的用户特征"></a>棋牌游戏的用户特征</h2><blockquote>
+<p><img src="https://i.imgur.com/K0nytO7.png" alt=""></p>
+<p>网络环境差，使用流量的场景多；</p>
+<p>低端机多，硬件配置较差；</p>
+<p>男性用户多，年龄层30往上；</p>
+<p>地域特征明显，川渝、江苏、浙江、广东及周边省份分布较多</p>
+</blockquote>
+<p><em>来源：艾瑞</em></p>
+<p>除了上图展示出的“休闲娱乐”这一特征，棋牌游戏还有两个需要关注的点：</p>
+<ol>
+<li>竞技：棋牌游戏本身就是对抗游戏，有明显的竞技特征</li>
+<li>趋利：部分棋牌游戏有较强的赌博特征，该类游戏的玩家都是逐利的</li>
+</ol>
+<h2 id="棋牌游戏的分类"><a href="#棋牌游戏的分类" class="headerlink" title="棋牌游戏的分类"></a>棋牌游戏的分类</h2><p>按游戏对象分，可分为棋类、牌类、麻将类、赌博机类</p>
+<p>棋类：围棋、象棋、军旗、跳棋、飞行棋等</p>
+<p>牌类：斗地主、争上游、十三张、牛牛等</p>
+<p>麻将类：各类地域玩法等</p>
+<p>赌博机类: 捕鱼、老虎机等</p>
+<p>按游戏目的分，可分为休闲类、竞技类、赌博类</p>
+<p>休闲类：跳棋、军旗、斗地主等</p>
+<p>竞技类：象棋、围棋、德州扑克等</p>
+<p>赌博类：所有赌博机类、大部分筹码游戏、大部分麻将游戏、十三张、牛牛等</p>
+<h2 id="棋牌游戏的营收来源"><a href="#棋牌游戏的营收来源" class="headerlink" title="棋牌游戏的营收来源"></a>棋牌游戏的营收来源</h2><p><strong>游戏币</strong></p>
+<p>游戏币类游戏的主要营收来源。玩家在游戏过程中通过输赢完成游戏币的流通，而系统从中获得手续费抽成。部分玩法特别是赌博类玩法可以达到相当大的输赢倍数，加快整体财富的流动。除此之外银商也是不可忽视的因素。</p>
+<p><strong>道具及增值服务</strong></p>
+<p>通过售卖装饰类道具和<strong>不影响游戏基础公平性</strong>的功能类道具获得收益。QQ游戏就是这方面的典范。媲美QQ秀商城的游戏时装秀、负分清零道具、可以踢人的蓝钻等等。</p>
+<p><strong>房卡</strong></p>
+<p>玩家创建包厢（即私密房间）时需要消耗的道具。玩家通常有三种获取房卡的方式：</p>
+<p>一是直接从官方商城按原价购买，价格高；</p>
+<p>二是从代理手中购买，价格适中；</p>
+<p>三是自己成为代理，按进货价购买，价格最低；</p>
+<p>房卡模式出现之前，渠道眼中棋牌游戏通常是与休闲消除类游戏归为一类的。原因就是因为这两类游戏有高DAU、低付费率的共性。而房卡模式出现后，约局类地方棋牌游戏摇身一变成为高DAU、高付费率的手游类型了。</p>
+<h2 id="棋牌游戏的未来"><a href="#棋牌游戏的未来" class="headerlink" title="棋牌游戏的未来"></a>棋牌游戏的未来</h2><p>社交化——陌生人游戏转向熟人游戏</p>
+<p>竞技化——智力运动会已经加入棋牌项目</p>
+<p>泛娱乐化——直播、秀场内容创作</p>
+<p>O2O——线下实业合作</p>
+<h1 id="棋牌游戏的经济系统设计"><a href="#棋牌游戏的经济系统设计" class="headerlink" title="棋牌游戏的经济系统设计"></a>棋牌游戏的经济系统设计</h1><p>首先明确游戏经济系统服务的目的是什么。</p>
+<p>游戏的经济系统指的是一种存在于虚拟游戏世界中的经济，其实就是把经济学的理论应用到游戏中来从而构建出经济体系。其基本的四个概念为：生产,积累,交换,和消费。</p>
+<p>简要来说就是两点：</p>
+<p>一是设定和控制核心价值物的产出及消耗。游戏中的核心价值物包括游戏货币、经验值、重要材料等；</p>
+<p>二是平衡经济系统。如同现实生活的经济系统一样，游戏经济系统中良性的经济循环是供求平衡，不受严重通货膨胀和通货紧缩的影响。</p>
+<p>棋牌游戏采用的通常是封闭经济系统，与其他采用开放式经济系统的游戏不同。棋牌游戏中各类产出由系统完成，且玩家不能自由交易。所以供求平衡这类的问题就不需要再考虑了。</p>
+<p>所以棋牌游戏经济系统的服务目的就是<strong>设定和控制核心价值物的产出和消耗。</strong>明确了这一点，我们就可以继续后续的讨论。</p>
+<h2 id="核心价值物"><a href="#核心价值物" class="headerlink" title="核心价值物"></a>核心价值物</h2><p><strong>核心价值物的分类</strong></p>
+<p>棋牌游戏中的核心价值物主要有三类：</p>
+<ol>
+<li>游戏币：游戏对局结算直接消耗的货币（游戏币模式），游戏创建时消耗的房卡（房卡模式）。游戏中最常见的一般等价物，可以通过游戏行为和通货兑换获得的代币。</li>
+<li>通货：充值金额的数值体现，可在游戏内单向转换为游戏币和其他道具的货币。</li>
+<li>特殊代币：为游戏的特定系统提供服务的代币，如可兑换虚拟/实物奖励的兑换券等。</li>
+</ol>
+<p><strong>核心价值物关系等式</strong></p>
+<p>设计经济系统离不开核心价值物的关系等式，其形式通常是这样的：</p>
+<p>K1 代币1 = K2 代币2 = K3 代币3 = …… = Ki 代币i = x 一般等价物</p>
+<p>在其他游戏中，这个一般等价物的选择非常有讲究。但是在棋牌游戏中，这个一般等价物的选择非常简单，就是<strong>1局游戏</strong>。</p>
+<p>所以棋牌游戏中的价值物关系等式理论上应是这样的：</p>
+<p>K1 游戏币 = K2 通货 = K3 特殊代币1 = …… = Ki 特殊代币i = x 局游戏</p>
+<p>进一步讲，棋牌游戏中可能有不同的玩法，有按一定规则划分的不同的房间，所以 1局游戏 这个一般等价物需要进一步明确为某个具体玩法和等级房间内的1局游戏。</p>
+<p>对于可重购增购筹码、可翻倍、可买子的棋牌游戏，如果缺乏实现设计阶段可先取最低流通的情形，待到产品上线稳定后根据实际游戏情况计算期望流通后再进行调整。</p>
+<p><strong>核心价值物的产出与消耗</strong></p>
+<blockquote>
+<p><img src="http://gameweb-img.qq.com/gad/20150601/2cd845311aa14e35896270d81b9b50d3.001.1433145886.png" alt=""></p>
+</blockquote>
+<p><em>Image From GAD</em></p>
+<p>考虑经典的水池模型。与传统的RPG游戏整个游戏世界共用一个水池不同，棋牌游戏中每个用户分群共用一个水池。每个水池会设有一个阈值，用于反映玩家身上价值物产出消耗趋于平衡稳定，可以满足其体验规划中其分群可接触各类玩法的基础需求。相应的，当该分群持有的实际等价物量大于阈值时，就需要进行放水。反之，亦成立。游戏中的各类等价物产出的过程就相当于向水池中注水，消耗的过程就相当于向外放水。</p>
+<p>首先需要明确棋牌游戏中各价值物产出和消耗的途径。</p>
+<p>产出途径包括任务奖励、活动奖励、运营奖励等。<br>消耗途径包括对局输赢、各类手续费、系统消耗等。</p>
+<p>明确产出和消耗的途径后，就需要制定消耗、产出的节奏和数值分布。</p>
+<p>定义</p>
+<p>系统总产出 I=sigma(Ii, i=1→n)<br>系统总消耗 E=sigma(Ei, i=1→n)</p>
+<p>每个用户社群的水池模型走势是根据其所属生命周期阶段变化的，其整体趋势大致如下：</p>
+<p>幼年期：I&gt;E<br>成长期：I=E<br>成熟期：I&lt;E</p>
+<p>通过控制产出、消耗中的具体途径，就可以改变水池模型的整体走势。先从游戏币模式的常规房间说起，其中可操作的消耗途径主要有以下几类：</p>
+<ul>
+<li>常规匹配房间<ul>
+<li>入场门槛<ul>
+<li>入场财富上下限</li>
+<li>升降级周期</li>
+</ul>
+</li>
+<li>手续费<ul>
+<li>固定手续费</li>
+<li>浮动手续费</li>
+</ul>
+</li>
+<li>底分<ul>
+<li>固定底分</li>
+<li>浮动底分</li>
+</ul>
+</li>
+<li>流通速度<ul>
+<li>最小输赢</li>
+<li>期望输赢</li>
+<li>最大输赢</li>
+</ul>
+</li>
+<li>期望胜率<ul>
+<li>发牌策略</li>
+<li>机器人/托管策略</li>
+</ul>
+</li>
+<li>游戏节奏<ul>
+<li>匹配策略</li>
+<li>单轮出牌等待时长</li>
+<li>准备等待时长</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>知道了可以操作的消耗途径，我们再来完成房间的划分：</p>
+<p>入场财富上下限与流通速度决定了升降级周期。升降级周期决定了不同房间等级的划分。广义上我们可以把房间分为三个层次，即初级场、中级场与高级场。</p>
+<ul>
+<li>房间层次划分<ul>
+<li>初级场<ul>
+<li>保护性质的房间</li>
+<li>面向菜鸟、免费和小R玩家</li>
+<li>流通速度温和</li>
+<li>升降级周期适中</li>
+<li>游戏节奏慢</li>
+<li>系统抽成少</li>
+</ul>
+</li>
+<li>中级场<ul>
+<li>体验和筛选性质的房间</li>
+<li>面向小R、中R和高牌技玩家</li>
+<li>流通速度较快</li>
+<li>升降级周期较快</li>
+<li>游戏节奏适中</li>
+<li>系统抽成适中</li>
+</ul>
+</li>
+<li>高级场<ul>
+<li>刺激性质的房间</li>
+<li>面向大R玩家</li>
+<li>流通速度极快</li>
+<li>升降级周期缓慢</li>
+<li>游戏节奏快</li>
+<li>系统抽成高</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>这里反复提到升降级周期这个字眼，其实这是一个蛮有意思的点。想想你打炉石爬梯时的经历你就会懂了。升降级周期过长，会使人没有降级的危机感，也看不到升级的希望；升降级周期过短，会让人产生成就感疲劳，或让人陷入无尽的挫败。</p>
+<p>理想情况下，升降级周期是应当在用户生命线行为设计的过程中一并完成的。需要搭配一系列的辅助措施，如任务指引，低保补助等，以将用户相对不可控的操作控制在可控的结果范围内。</p>
+<p>各个房间划分的营收能力可以简单计为每日盘数*盘均抽成。三个房间层次的人数和营收能力现实中往往是这样的：</p>
+<p>人数/盘数：初级&gt;中级&gt;高级<br>营收能力：中级&gt;高级&gt;初级</p>
+<p>有人说，初级房间营收效率这么低，为什么不把抽成调高些？与页游一小部分大R撑起整个服务器，免费和小中R沦为其游戏体验内容的现象不一样，游戏币模式的棋牌游戏，除非你能拍着胸脯说你的机器人逻辑足以以假乱真，真实用户匹配真实用户还是刚需。把用户留在盘子里，就拥有了希望。</p>
+<p>房间配置上线后，数值调整也开始了。棋牌游戏的经济总量是受用户充值行为影响的，A用户充值获得的价值物可能通过正常输赢流通到B、C处，导致整体模型的变化。很多优秀的棋牌游戏数值都不是一成不变的，需要根据实际情况进行调整。</p>
+<h1 id="其他模块对经济系统的影响"><a href="#其他模块对经济系统的影响" class="headerlink" title="其他模块对经济系统的影响"></a>其他模块对经济系统的影响</h1><h2 id="运营活动"><a href="#运营活动" class="headerlink" title="运营活动"></a>运营活动</h2><p>先明确一点，活动不等于系统。</p>
+<p>系统=固定的体验制造，用于对玩家群体生命周期内各阶段的状态与行为进行<strong>体验设计</strong></p>
+<p>活动=阶段性的体验调节，用于对玩家群体的<strong>体验调节</strong></p>
+<p>国产手游活动无脑泛滥已经成为一种常态，棋牌游戏也不能限免。在一些思路不清的项目组，关于活动有很多常见的错误认识，试列举如下：</p>
+<ol>
+<li><p>运营活动是一种冲击KPI的工具。活跃不够？上个盘数活动！付费不够？上个促销活动！新增不够？上个拉新活动！活动参与度不高？加奖励！活动发出的奖太多了？改配置！</p>
+<p> —— 之前已经提到了，活动是进行玩家体验调节的工具，不是拉KPI的工具</p>
+</li>
+<li><p>如何评价活动效果？活动期充值数据-非活动期充值数据！</p>
+<p> —— 新流入的玩家考虑了吗？活动的低迷期了解过吗？活动带来的与营收无关的负面影响考虑过吗？</p>
+</li>
+</ol>
+<ol>
+<li>运营活动就应该让运营来拍板，你们策划不用操心了。<br> —— sorry，不管是对游戏的整体认知，还是活动设计对游戏影响的平衡上，无疑都是策划来进行设计更合理。运营更多应该给到的是市场热点题材方面的建议，而不是对玩法、形式指手画脚。</li>
+</ol>
+<p>笔者本人对游戏中无脑上活动是十分不提倡的。之前已经提到活动是用来进行体验调节的，具体来讲，有以下几个功能：</p>
+<ul>
+<li><p>调节试错</p>
+<p>  游戏中的兑换商城中新上架了一批商品，但是兑换热度很低，分析后认为可能是对“用户对该系统的消费能力”预估过高。此时我们可以上架一个活动，降低兑换商城中商品的售价，并维持一段时间，观察系统的反馈，如果仍未达到预期，可以下架活动并改回来。如果达到预期，可以考虑直接以系统调整的形式将活动与现有系统合并，使其长期保留下来。</p>
+</li>
+<li><p>提醒</p>
+<p>  对于新用户和不热衷于探索游戏新内容的用户，需要用活动对其进行提醒。如经典的首充类活动，就是为了培养未付费用户的付费习惯，增加付费转化；在新上线的XX玩法中游戏X局类活动，就是为了告知用户新玩法的上线并引导其对其进行体验</p>
+</li>
+<li><p>游戏环境调整</p>
+<p>  当我们发现游戏环境存在问题，某一类用户需要进行引导时，可以设计该类用户专享的活动。例如某一个财富区间段的用户过多，导致临近财富区间段的用户游戏匹配过慢，可以通过开展消耗活动快速拉开玩家的差距。如果某一个财富区间段的用户过少，则可以开放针对该层级的促销活动，以打折的形式将低层级的用户引导上来。</p>
+</li>
+<li><p>配合运营</p>
+<p>  用活动来配合运营宣传，可以达到1+1&gt;2的效果。但要注意与其他功能性活动调整为主的目的不同，该类活动的目的主要是营造话题，不要喧宾夺主影响了整个游戏经济系统的投放。</p>
+</li>
+</ul>
+<p>讨论了活动的功能，再来谈谈活动对经济系统的影响：</p>
+<ul>
+<li><p>影响原有的规划</p>
+<p>  设计合理的游戏，在设计之初，都会对不同种类的玩家生命周期的各类行为体验进行规划。以消费行为为例，需要对游戏目标用户消费习惯、消费能力、消费场景进行分析后，才能得到的保障游戏收益最大化体验规划。游戏上限后，各类用户都会沿着事先规划好的体验线行进。开启活动，可能破坏对处于体验线不同阶段的用户的后续体验规划。例如最初的体验规划中预计不充值的用户第x天会遇到财富卡点，如果不充值就会降级，如果因为计划外活动导致的财富变化导致卡点无法形成，就会影响用户付费习惯的养成。</p>
+</li>
+<li><p>影响用户的价值认知</p>
+<p>  之前已经提到，经济系统设计之初我们已经得到了核心价值物的价值等式，假设基础售价1元=1钻石。有一日举办了促销活动，活动期内1元=2钻石。经历过该活动的用户，无论参与与否，之后在看到1元=1钻石的价格，购买动力都会大打折扣。这类促销活动的力度和密度越大，商品日常的消费预期越受影响。</p>
+<p>  每一类用户的消费深度是有限的，当商品的消费预期下降时，会有两种结果：</p>
+<ol>
+<li>用户完成消费深度的周期拉长，即单位游戏时间的消费额下降，游戏营收能力下降</li>
+<li><p>用户在短时间内迅速耗尽局部消费深度，流失风险增大</p>
+<p>第2种结果在挣快钱的游戏中反而是一种乐见的情形，但在依赖用户量的棋牌游戏中是不可接受的。</p>
+</li>
+</ol>
+</li>
+<li><p>影响经济系统的可观测性</p>
+<p>  活动的产出与消耗均是经济系统设计之初计划外的，会对经济系统产生不可预知的影响，影响经济系统后续的可观测性。当经济系统的可观测性下降时，不仅很难评估一个活动究竟是正收益还是负收益，还会影响对整个经济系统的监控和预测。</p>
+<p>  以促销类活动为例，其要素有二：</p>
+<ol>
+<li><strong>预支</strong>玩家后续一段时间的消费力，即一个用户原计划每月投入30元，由于这个月有促销活动，他将下一个月的预算与本月的预算一并投入参与活动，下个月计划内不会再投入。</li>
+<li><p><strong>刺激</strong>玩家产生新的消费力，即一个用户原计划本月投入30元，但因为促销活动过于诱人，他计划把本月投入提升到50元，这个变动不影响下个月的投入。</p>
+<p>通常而言，新用户由于未形成自己的消费习惯，易在促销活动的刺激下产生新的消费力；而对于已经形成个人消费习惯的老用户，促销活动对其产生的影响大都是预支作用。这样的结果就是，在大力度的促销活动后，有极大可能迎来充值低迷期。迫于KPI考核的压力，可能又很快上线新的促销活动。</p>
+<p>如此往复，用户患上活动依赖症，无活动不充值，无活动不活跃；运营也患上活动依赖症，无活动无KPI，无活动无奖金，在这种循环中，营收曲线会呈现出脆弱的M形，留存不强、增量不够的周期甚至会直接进入倒挂M，这不免让人想到投资市场。</p>
+</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p><img src="https://wpimg.wallstcn.com/ca18257a-d16c-4df0-b444-edf3a1033cda.png" alt=""></p>
+</blockquote>
+<p><em>国债利差收益率曲线，Cwik（2005）</em></p>
+<ul>
+<li><p>影响用户分群格局</p>
+<p>  活动的设计，是基于对游戏中大部分玩家的当前状态的分析完成的，制定的活动也是用于调节大部分玩家的当前状态，无法精确到个体。也无法考虑到未加入游戏，但将来有可能加入的潜在用户。</p>
+<p>  如果开设活动过多，很容易导致新加入游戏的新用户无法参与老玩家已经享受过的各类福利性质活动，进而在各类游戏资源的积累上被早加入游戏的玩家碾压。虽然可以通过新用户专享的追赶机制缩短这一距离，但是还是会对活动设计带来困难。进而影响各个用户分群的特征，对整个经济系统的格局产生影响。</p>
+</li>
+</ul>
+<p>综上，如果可能，应在经济系统设计初期就将常见的活动类型考虑进去，游戏正常上线后尽可能不要开展规划外的活动，这一点腾讯系的产品都处理的比较好。</p>
+<h2 id="兑换商城与比赛"><a href="#兑换商城与比赛" class="headerlink" title="兑换商城与比赛"></a>兑换商城与比赛</h2><p>之前提到了棋牌用户的一个典型特征是逐利，游戏中游戏币的输赢固然可以形成一定的正向反馈，但比起线下实际棋牌游戏，刺激程度还是无法比及的。为了加深这类正向反馈，兑换商城与比赛应运而生。两者其实都是将牌局输赢与现实收益挂钩，赋予游戏币和游戏表现一定的真实价值，来加强游戏对局的真实感。由于其功能的共通性，笔者把这两者合在一章讲解。</p>
+<p>兑换商城就是兑换各类虚拟、实物奖励的场所。政策不允许直接使用结算相关的游戏币兑换实物奖品，所以通常使用的是系统特有的货币，如兑换券、秋卡等。</p>
+<p>这类可兑换货币的获取途径通常有以下几种：</p>
+<ul>
+<li>对局获得（投入游戏币获得可兑换货币）</li>
+<li>比赛获得（投入游戏币获得可兑换货币）</li>
+<li>活动获得（投入游戏币或现金获得可兑换货币）</li>
+</ul>
+<p>想必读者已经看出来了，兑换商城就是游戏币与现实价值兑换的桥梁，不论这个中间物“可兑换货币”如何变化，其交易的双方主体都是确定的。明确了这一点，在设计经济系统的过程中，我们只需要考虑可兑换货币各类获取途径中游戏币到可兑换货币的转化率即可。</p>
+<p>其实比赛也好，兑换商城也好，其根本目的还是提升正向反馈，通过设置奖品兑换门槛，用账户中的过剩价值引导用户不断游戏，最终达成提升用户留存的目的。<strong>不要试图靠比赛系统拉升付费</strong>，除非你做的是德州这类可重购增购的筹码类游戏或者赌博类游戏。</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>棋牌游戏的经济系统比起其他游戏是真的小巫见大巫，但这并不是忽视它的理由。如果说各类玩法是棋牌游戏的外衣，那么经济系统就是棋牌的血液。<br>如何定义货币及其价值？如何控制其产出和消耗？如何控制匹配房间的财富流通效率？如何通过财富控制用户生命周期线的行为？这些都是值得认真思考的问题。现在不少棋牌游戏过度重视运营和市场推广，这也恰恰反映出行业本身的浮躁和产品理念的偏差，不免让人十分遗憾。</p>
+
+      
+    </div>
+    
+    
+    
+    
+      <div>
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS�� sweetalert ���޸�·�� -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>Title:</span><a href="/2018/03/20/2018032001/">棋牌游戏的经济系统设计</a></p>
+  <p><span>Author:</span><a href="/" title="���� Fancydz �ĸ��˲���">Fancydz</a></p>
+  <p><span>Publish:</span>2018.03.20  23:03</p>
+  <p><span>Update:</span>2018.03.21  22:03</p>
+  <p><span>Path:</span><a href="/2018/03/20/2018032001/" title="棋牌游戏的经济系统设计">https://fancydz.github.io/2018/03/20/2018032001/</a>
+    <span class="copy-path"  title="Click to copy path"><i class="fa fa-clipboard" data-clipboard-text="https://fancydz.github.io/2018/03/20/2018032001/"  aria-label="Copy Finished"></i></span>
+  </p>
+  <p><span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)</a> This work is licensed under a Creative Commons Attribution 4.0 International License.</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: 'Copy Finished',
+          icon: "success", 
+          showConfirmButton: true
+          });
+	});
+    });  
+</script>
+
+      </div>
+    
+	
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/棋牌/" rel="tag"># 棋牌</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/19/2018031901/" rel="next" title="走格子抽奖设计小谈">
+                <i class="fa fa-chevron-left"></i> 走格子抽奖设计小谈
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myavatar.jpg"
+                alt="Fancydz" />
+            
+              <p class="site-author-name" itemprop="name">Fancydz</p>
+              <p class="site-description motion-element" itemprop="description">Game for Fun, Not for Food</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:fzaq@qq.com" target="_blank" title="Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://steamcommunity.com/id/fancydz/" target="_blank" title="Steam">
+                      
+                        <i class="fa fa-fw fa-steam"></i>Steam</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#预热：一分钟了解棋牌游戏"><span class="nav-number">2.</span> <span class="nav-text">预热：一分钟了解棋牌游戏</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#棋牌游戏的演变"><span class="nav-number">2.1.</span> <span class="nav-text">棋牌游戏的演变</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#棋牌游戏的用户特征"><span class="nav-number">2.2.</span> <span class="nav-text">棋牌游戏的用户特征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#棋牌游戏的分类"><span class="nav-number">2.3.</span> <span class="nav-text">棋牌游戏的分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#棋牌游戏的营收来源"><span class="nav-number">2.4.</span> <span class="nav-text">棋牌游戏的营收来源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#棋牌游戏的未来"><span class="nav-number">2.5.</span> <span class="nav-text">棋牌游戏的未来</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#棋牌游戏的经济系统设计"><span class="nav-number">3.</span> <span class="nav-text">棋牌游戏的经济系统设计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#核心价值物"><span class="nav-number">3.1.</span> <span class="nav-text">核心价值物</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他模块对经济系统的影响"><span class="nav-number">4.</span> <span class="nav-text">其他模块对经济系统的影响</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#运营活动"><span class="nav-number">4.1.</span> <span class="nav-text">运营活动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#兑换商城与比赛"><span class="nav-number">4.2.</span> <span class="nav-text">兑换商城与比赛</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">5.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fancydz</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v6.0.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.0.2"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
